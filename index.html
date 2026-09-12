@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLYX Media — Performance Marketing & Creator Ads Agency</title>
+  <meta name="description" content="CLYX Media turns creator content into scaled paid ads. Performance marketing, influencer whitelisting, social media, and conversion-built websites.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="loader">
+    <div class="loader-mark">CLYX<span>.</span></div>
+    <div class="loader-bar"><span></span></div>
+  </div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- Hidden File Input for Custom Founder Image Insertion -->
+  <input type="file" id="founderFileInput" accept="image/*" style="display:none">
+
+  <!-- Navigation Header -->
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a href="#" class="logo">CLYX<span>.</span></a>
+      <nav class="main-nav">
+        <a href="#engine">The Engine</a>
+        <a href="#services">Services</a>
+        <a href="#how">Whitelisting</a>
+        <a href="#portfolio">Work</a>
+        <a href="#team">Founders</a>
+        <a href="#testimonials">Results</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Dark/Light Mode">
+          <span id="themeIcon">☀️</span> <span id="themeLabel">Light</span>
+        </button>
+        <a href="#contact" class="btn btn-primary btn-small">Start a Project ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero">
+      <div class="hero-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+      </div>
+
+      <div class="hero-inner">
+        <p class="eyebrow">Performance marketing &bull; Creator ads &bull; Web</p>
+        <h1 class="hero-title">
+          <span class="hero-line">We turn <em>organic clips</em></span><br>
+          <span class="hero-line">into <em class="accent">scaled accounts.</em></span>
+        </h1>
+        <p class="hero-sub">
+          CLYX Media runs the creator whitelisting + performance engine behind brands that sell — Meta &amp; Google ads, content, branding, and websites built for one job: conversion.
+        </p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary btn-large">Book a Growth Call ↗</a>
+          <a href="#engine" class="btn btn-ghost btn-large">Experience 3D Engine ↓</a>
+        </div>
+      </div>
+
+      <!-- Floating Parallax Clip Stack (The Whitelisting Metaphor) -->
+      <div class="clip-stack" id="clipStack">
+        <div class="clip-card" data-depth="0.04">
+          <div class="clip-thumb fashion"></div>
+          <div class="clip-overlay"></div>
+          <div class="clip-tag">Organic Reel</div>
+        </div>
+        <div class="clip-card" data-depth="0.07">
+          <div class="clip-thumb beauty"></div>
+          <div class="clip-overlay"></div>
+          <div class="clip-tag">Organic Reel</div>
+        </div>
+        <div class="clip-card whitelisted" data-depth="0.10">
+          <div class="clip-thumb food"></div>
+          <div class="clip-overlay"></div>
+          <div class="clip-tag">Scaled Ad · <span class="counter" data-target="312" data-prefix="+" data-suffix="% ROAS">+312% ROAS</span></div>
+        </div>
+        <div class="clip-card" data-depth="0.06">
+          <div class="clip-thumb tech"></div>
+          <div class="clip-overlay"></div>
+          <div class="clip-tag">Organic Reel</div>
+        </div>
+        <div class="clip-card whitelisted" data-depth="0.09">
+          <div class="clip-thumb fashion"></div>
+          <div class="clip-overlay"></div>
+          <div class="clip-tag">Scaled Ad · <span class="counter" data-target="188" data-prefix="+" data-suffix="% CTR">+188% CTR</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Infinite Marquee Strip -->
+    <div class="marquee-strip">
+      <div class="marquee-track">
+        <span>50+ D2C BRANDS SCALED</span><span class="dot">·</span>
+        <span>₹45CR+ AD SPEND MANAGED</span><span class="dot">·</span>
+        <span>3.4X AVG ROAS LIFT</span><span class="dot">·</span>
+        <span>250+ CREATORS IN NETWORK</span><span class="dot">·</span>
+        <span>CREATOR WHITELISTING ENGINE</span><span class="dot">·</span>
+        <span>50+ D2C BRANDS SCALED</span><span class="dot">·</span>
+        <span>₹45CR+ AD SPEND MANAGED</span><span class="dot">·</span>
+        <span>3.4X AVG ROAS LIFT</span><span class="dot">·</span>
+        <span>250+ CREATORS IN NETWORK</span><span class="dot">·</span>
+      </div>
+    </div>
+
+    <!-- 3D KINETIC MACBOOK PERSPECTIVE SCROLL (Hacker Villa Inspo) -->
+    <section class="kinetic-section" id="engine">
+      <div class="kinetic-sticky-wrap">
+        
+        <div class="kinetic-header">
+          <p class="eyebrow" style="margin-bottom: 8px;">Live Scaling Architecture ↓</p>
+          <h2>The engine behind <span style="color: var(--clyx-yellow);">₹45Cr+ in revenue</span>.</h2>
+          <p>Real-time creator whitelisting paired with algorithmic Meta &amp; Google scaling.</p>
+        </div>
+
+        <div class="macbook-container">
+          
+          <div class="floating-badge badge-left">
+            <span style="font-size: 1.1rem;">🟡</span>
+            <div>
+              <div style="font-size: 0.65rem; color: #94A3B8;">BENCHMARK</div>
+              <div><span class="counter" data-target="3.4" data-decimals="1" data-suffix="X">3.4X</span> Avg ROAS Lift</div>
+            </div>
+          </div>
+
+          <div class="floating-badge badge-right">
+            <span style="font-size: 1.1rem;">🔵</span>
+            <div>
+              <div style="font-size: 0.65rem; color: #94A3B8;">NETWORK</div>
+              <div><span class="counter" data-target="250" data-suffix="+">250+</span> Vetted Creators</div>
+            </div>
+          </div>
+
+          <div class="macbook-screen-lid">
+            <div class="macbook-camera"></div>
+            
+            <div class="macbook-display">
+              <div class="dash-nav">
+                <div class="dash-nav-brand">
+                  <span style="color: var(--clyx-yellow);">CLYX</span> GROWTH COMMAND CENTER
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                  <span class="dash-nav-pill">● LIVE ENGINE</span>
+                  <span>Meta Advantage+ Connected</span>
+                </div>
+              </div>
+
+              <div class="dash-body">
+                <div class="dash-stats-row">
+                  <div class="dash-stat-box">
+                    <div class="lbl">Blended ROAS</div>
+                    <div class="val counter" data-target="3.72" data-decimals="2" data-suffix="X" style="color: var(--clyx-yellow);">3.72X</div>
+                    <div class="change">↑ +0.6x vs target</div>
+                  </div>
+                  <div class="dash-stat-box">
+                    <div class="lbl">30-Day Revenue</div>
+                    <div class="val counter" data-target="1.84" data-decimals="2" data-prefix="₹" data-suffix=" Cr">₹1.84 Cr</div>
+                    <div class="change">↑ +42% MoM</div>
+                  </div>
+                  <div class="dash-stat-box">
+                    <div class="lbl">Whitelisted Hooks</div>
+                    <div class="val counter" data-target="48" data-suffix=" Live">48 Live</div>
+                    <div class="change">Across 18 Creators</div>
+                  </div>
+                  <div class="dash-stat-box">
+                    <div class="lbl">Avg 3-Sec Retention</div>
+                    <div class="val counter" data-target="68.4" data-decimals="1" data-suffix="%">68.4%</div>
+                    <div class="change">Industry Avg: 38%</div>
+                  </div>
+                </div>
+
+                <div class="dash-chart-card">
+                  <div class="dash-chart-head">
+                    <strong style="font-size: 0.85rem; color: #FFF;">Daily Attributed Revenue vs Ad Spend (Live)</strong>
+                    <span style="font-size: 0.75rem; color: var(--clyx-yellow);">Advantage+ Creative Optimization</span>
+                  </div>
+                  <div class="chart-bars-wrap">
+                    <div class="chart-bar-group"><div class="chart-bar" style="height: 42%;"></div><span class="chart-label">Mon</span></div>
+                    <div class="chart-bar-group"><div class="chart-bar" style="height: 58%;"></div><span class="chart-label">Tue</span></div>
+                    <div class="chart-bar-group"><div class="chart-bar" style="height: 72%;"></div><span class="chart-label">Wed</span></div>
+                    <div class="chart-bar-group"><div class="chart-bar" style="height: 66%;"></div><span class="chart-label">Thu</span></div>
+                    <div class="chart-bar-group"><div class="chart-bar" style="height: 86%;"></div><span class="chart-label">Fri</span></div>
+                    <div class="chart-bar-group"><div class="chart-bar" style="height: 96%;"></div><span class="chart-label">Sat</span></div>
+                    <div class="chart-bar-group"><div class="chart-bar" style="height: 90%;"></div><span class="chart-label">Sun</span></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="macbook-base">
+            <div class="macbook-notch"></div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- KEY STATS COUNTERS (Numbers count from 0) -->
+    <section class="stats-counter-strip">
+      <div class="stat-counter-card">
+        <div class="counter-number counter" data-target="45" data-prefix="₹" data-suffix="Cr+">0</div>
+        <div class="counter-label">Ad Spend Managed</div>
+        <div class="counter-detail">Across Meta &amp; Google ad accounts</div>
+      </div>
+      <div class="stat-counter-card">
+        <div class="counter-number counter" data-target="3.4" data-decimals="1" data-suffix="X">0</div>
+        <div class="counter-label">Average ROAS Lift</div>
+        <div class="counter-detail">Whitelisted vs Standard brand ads</div>
+      </div>
+      <div class="stat-counter-card">
+        <div class="counter-number counter" data-target="250" data-suffix="+">0</div>
+        <div class="counter-label">Active Creators</div>
+        <div class="counter-detail">Fashion, Beauty, Food, Tech benches</div>
+      </div>
+      <div class="stat-counter-card">
+        <div class="counter-number counter" data-target="180" data-prefix="₹" data-suffix="Cr+">0</div>
+        <div class="counter-label">Revenue Generated</div>
+        <div class="counter-detail">Delivered for high-growth D2C brands</div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section services" id="services">
+      <div class="section-head">
+        <p class="eyebrow">What We Run</p>
+        <h2>Six disciplines. One growth engine.</h2>
+      </div>
+      <div class="service-grid">
+        <article class="service-card">
+          <div class="service-icon">↗</div>
+          <h3>Influencer Marketing</h3>
+          <p>We build and manage a creator bench matched to your category, then negotiate content + usage rights for paid.</p>
+        </article>
+        <article class="service-card">
+          <div class="service-icon">▲</div>
+          <h3>Performance Marketing</h3>
+          <p>Meta &amp; Google campaigns run on data, not guesses — we scale spend behind what's already converting.</p>
+        </article>
+        <article class="service-card">
+          <div class="service-icon">◆</div>
+          <h3>Social Media Management</h3>
+          <p>Monthly content calendars, channel management, and organic strategy that builds a real audience.</p>
+        </article>
+        <article class="service-card">
+          <div class="service-icon">●</div>
+          <h3>UGC Videos</h3>
+          <p>Product photography, video direction, and AI-assisted design assets built for the feed, not a boardroom.</p>
+        </article>
+        <article class="service-card">
+          <div class="service-icon">■</div>
+          <h3>Website Development</h3>
+          <p>UI/UX-first, conversion-built sites — coded fast, priced for what they return in revenue.</p>
+        </article>
+        <article class="service-card">
+          <div class="service-icon">◈</div>
+          <h3>Shopify Store CRO</h3>
+          <p>Storefronts built around checkout speed, merchandising, and the metrics that actually move revenue.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- WHITELISTING EXPLAINER -->
+    <section class="section how" id="how">
+      <div class="how-grid">
+        <div class="how-copy">
+          <p class="eyebrow">The CLYX Methodology</p>
+          <h2>A one-off post doesn't sell.<br>A whitelisted ad, run on data, does.</h2>
+          <p class="how-text">
+            Instead of paying for a single influencer post that disappears in 24 hours, we run the creator's own organic content as a paid ad through their handle — it reads as a genuine recommendation, not a sponsored pitch, earning instant trust. From there, performance analytics decide which hooks get scaled.
+          </p>
+        </div>
+        <div class="how-steps">
+          <div class="how-step">
+            <span class="how-num">01</span>
+            <div>
+              <h4>Creator Posts Organically</h4>
+              <p>Real handles. Authentic audience trust. Genuine reaction.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <span class="how-num">02</span>
+            <div>
+              <h4>We Whitelist Top Clips</h4>
+              <p>Direct ads running through the creator's account with dark-post permissions.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <span class="how-num">03</span>
+            <div>
+              <h4>Data Decides The Scale</h4>
+              <p>Spend follows verified conversion rates and ROAS, not intuition.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION (HORIZONTAL SCROLLABLE & REDUCED SIZE) -->
+    <section class="section portfolio" id="portfolio">
+      <div class="section-head split">
+        <div>
+          <p class="eyebrow">Recent Client Work</p>
+          <h2>Campaigns, not concepts.</h2>
+        </div>
+        <div class="portfolio-controls-wrap">
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="fashion">Fashion</button>
+            <button class="filter-tab" data-filter="beauty">Beauty</button>
+            <button class="filter-tab" data-filter="food">Food</button>
+            <button class="filter-tab" data-filter="tech">Tech</button>
+          </div>
+          <div class="portfolio-nav-arrows">
+            <button class="portfolio-arrow-btn" id="portfolioPrevBtn" aria-label="Previous Campaign">←</button>
+            <button class="portfolio-arrow-btn" id="portfolioNextBtn" aria-label="Next Campaign">→</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horizontal Scrollable Track -->
+      <div class="portfolio-grid" id="portfolioGrid"></div>
+    </section>
+
+    <!-- FOUNDERS SECTION WITH IMAGE INSERTION OPTION -->
+    <section class="section team" id="team">
+      <div class="section-head">
+        <p class="eyebrow">Leadership</p>
+        <h2>Small team. Direct founder access.</h2>
+        <p style="margin-top: 10px; max-width: 600px;">
+          You collaborate directly with senior partners who have scaled eight-figure ad spend. Click any avatar to customize with your own photo.
+        </p>
+      </div>
+      <div class="team-grid" id="teamGrid"></div>
+    </section>
+
+    <!-- TESTIMONIALS MARQUEE (FASTER ANIMATION) -->
+    <section class="section testimonials" id="testimonials">
+      <div class="section-head" style="text-align: center;">
+        <p class="eyebrow">Client Validation</p>
+        <h2>What D2C founders say about CLYX.</h2>
+      </div>
+      <div class="testimonial-marquee">
+        <div class="testimonial-track" id="testimonialTrack"></div>
+      </div>
+    </section>
+
+    <!-- CONVERSION CTA BAND -->
+    <section class="cta-band" id="contact">
+      <h2>Ready to turn your creators into scalable ad accounts?</h2>
+      <p style="max-width: 600px; color: rgba(255,255,255,0.85); font-size: 1.15rem;">
+        Let's audit your current Meta/Google ad accounts and creator pipeline. We will map out a 90-day scaling roadmap for your brand.
+      </p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+        <a href="https://wa.me/919876543210" target="_blank" class="btn btn-primary btn-large">Chat On WhatsApp ↗</a>
+        <button class="btn btn-ghost btn-large" onclick="alert('30-min strategy consultation with CLYX Partners.')">Book 30-Min Strategy Call</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Case Study Popup Modal -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="clyx-modal">
+      <button class="modal-close-btn" id="modalClose">✕</button>
+      <div id="modalMedia"></div>
+      <p class="eyebrow" id="modalClient"></p>
+      <h3 id="modalCampaign" style="font-size: 2rem; margin-bottom: 16px;"></h3>
+      <div id="modalResults"></div>
+      <div id="modalMetrics"></div>
+    </div>
+  </div>
+
+  <!-- Aesthetic WhatsApp Concierge Float (Brand-Matched) -->
+  <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with Founders on WhatsApp">
+    <span class="whatsapp-pulse-dot"></span>
+    <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm.01 1.67c4.54 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.27-2.42 5.82a8.18 8.18 0 0 1-5.82 2.42c-1.48 0-2.93-.39-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.25-4.38c0-4.54 3.7-8.24 8.24-8.24zm4.5 11.64c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.07-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.72 4.31 3.81.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+    <span>Chat with Founders</span>
+  </a>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">CLYX<span>.</span></a>
+        <p>Performance marketing &amp; creator whitelisting agency for high-growth D2C brands.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Disciplines</h5>
+        <a href="#services">Influencer Marketing</a>
+        <a href="#services">Performance Marketing</a>
+        <a href="#services">UGC Content</a>
+        <a href="#services">Shopify Store CRO</a>
+      </div>
+      <div class="footer-col">
+        <h5>Work &amp; Proof</h5>
+        <a href="#portfolio">Featured Campaigns</a>
+        <a href="#how">The Whitelisting Engine</a>
+        <a href="#team">Team &amp; Partners</a>
+        <a href="#testimonials">Founder Reviews</a>
+      </div>
+      <div class="footer-col">
+        <h5>Get In Touch</h5>
+        <p style="margin-bottom: 8px;">Direct Partner Line:</p>
+        <a href="mailto:hello@clyxmedia.com" style="font-weight: 700; color: var(--text-primary);">hello@clyxmedia.com</a>
+        <a href="https://wa.me/919876543210" target="_blank" style="color: var(--clyx-yellow); font-weight: 700; margin-top: 10px;">WhatsApp: +91 98765 43210</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> CLYX Media. All rights reserved.</span>
+      <div><a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a></div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
