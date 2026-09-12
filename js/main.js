@@ -398,4 +398,117 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
     tTrack.innerHTML = cards + cards;
   }
+
+  // 12. Blog Rendering
+  const blogGrid = document.getElementById('blogGrid');
+  if (blogGrid && CLYX_DATA.blog) {
+    blogGrid.innerHTML = CLYX_DATA.blog.map(b => `
+      <article class="blog-card" id="${b.id}">
+        <div class="blog-thumb-wrap">
+          <img src="${b.img}" alt="${b.title}" loading="lazy">
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-meta-row">
+            <span class="blog-tag">${b.category}</span>
+            <span>${b.readTime} · ${b.date}</span>
+          </div>
+          <h3>${b.title}</h3>
+          <p>${b.summary}</p>
+          <a href="#blog" class="blog-read-link">Read Article →</a>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  // 13. Careers Rendering
+  const careersGrid = document.getElementById('careersGrid');
+  if (careersGrid && CLYX_DATA.careers) {
+    careersGrid.innerHTML = CLYX_DATA.careers.map(c => `
+      <div class="career-card">
+        <div>
+          <div class="career-top-meta">
+            <span class="career-tag">${c.tag}</span>
+            <span class="career-type">${c.type}</span>
+          </div>
+          <h3>${c.title}</h3>
+          <div class="career-loc">📍 ${c.location}</div>
+          <p>${c.description}</p>
+        </div>
+        <div>
+          <div class="career-comp">💰 ${c.compensation}</div>
+          <a href="mailto:careers@clyxmedia.com?subject=Application for ${encodeURIComponent(c.title)}" class="btn btn-ghost btn-small" style="width:100%;">Apply Now ↗</a>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // 14. Search Panel Toggle & Real-time Filter
+  const searchToggle = document.getElementById('searchToggle');
+  const searchPanel = document.getElementById('searchPanel');
+  const searchInput = document.getElementById('searchInput');
+  if (searchToggle && searchPanel) {
+    searchToggle.addEventListener('click', () => {
+      searchPanel.classList.toggle('open');
+      if (searchPanel.classList.contains('open') && searchInput) {
+        searchInput.focus();
+      }
+    });
+  }
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      document.querySelectorAll('.service-card, .portfolio-card, .founder-card, .blog-card, .career-card').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = (!q || text.includes(q)) ? '' : 'none';
+      });
+    });
+  }
+
+  // 15. Mobile Burger Toggle
+  const navBurger = document.getElementById('navBurger');
+  const mobileNav = document.getElementById('mobileNav');
+  if (navBurger && mobileNav) {
+    navBurger.addEventListener('click', () => {
+      mobileNav.classList.toggle('open');
+    });
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobileNav.classList.remove('open'));
+    });
+  }
+
+  // 16. Cookie Consent Bar
+  const cookieBar = document.getElementById('cookieBar');
+  const cookieAccept = document.getElementById('cookieAccept');
+  const cookieDecline = document.getElementById('cookieDecline');
+  if (cookieBar) {
+    const consent = localStorage.getItem('clyx_cookie_consent');
+    if (consent) {
+      cookieBar.classList.add('hidden');
+    }
+    if (cookieAccept) {
+      cookieAccept.addEventListener('click', () => {
+        localStorage.setItem('clyx_cookie_consent', 'accepted');
+        cookieBar.classList.add('hidden');
+      });
+    }
+    if (cookieDecline) {
+      cookieDecline.addEventListener('click', () => {
+        localStorage.setItem('clyx_cookie_consent', 'declined');
+        cookieBar.classList.add('hidden');
+      });
+    }
+  }
+
+  // 17. Newsletter Form Feedback
+  const newsletterForm = document.getElementById('newsletterForm');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = newsletterForm.querySelector('input');
+      if (input && input.value) {
+        alert(`Thank you for subscribing! We've sent a confirmation to ${input.value}`);
+        input.value = '';
+      }
+    });
+  }
 });

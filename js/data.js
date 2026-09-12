@@ -103,6 +103,63 @@ const CLYX_DATA = {
       brand: "Volt Audio",
       metrics: "5.1x Peak ROAS · 0.4s Page Speed"
     }
+  ],
+
+  blog: [
+    {
+      id: "creator-whitelisting-playbook",
+      title: "The Creator Whitelisting Playbook: How to Cut Meta CAC by 40%",
+      category: "Performance Ads",
+      readTime: "5 min read",
+      date: "Sep 2026",
+      summary: "Why running ads directly through creator handles consistently beats brand page ads in CTR, CPM, and ROAS.",
+      img: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      id: "why-studio-ads-die",
+      title: "Why Studio Product Ads Die in 2026 (And What Actually Scales on Reels)",
+      category: "Creative Strategy",
+      readTime: "4 min read",
+      date: "Aug 2026",
+      summary: "The 3-second hook framework that converted over ₹12Cr in direct-to-consumer sales for emerging lifestyle brands.",
+      img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      id: "sub-second-checkout",
+      title: "The 0.4-Second Checkout: How Sub-Second Speed Lifts Shopify ROAS",
+      category: "CRO & Tech",
+      readTime: "6 min read",
+      date: "Jul 2026",
+      summary: "Every 100ms delay costs 7% in checkout conversions. How headless Next.js storefronts supercharge Meta traffic.",
+      img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop"
+    }
+  ],
+
+  careers: [
+    {
+      title: "Senior Performance Media Buyer (Meta & TikTok)",
+      type: "Full-Time",
+      location: "Remote / Hybrid (Mumbai)",
+      compensation: "₹18L - ₹28L + Performance Bonus",
+      description: "Manage ₹5Cr+ in monthly ad spend across high-growth D2C brands. Lead creative testing frameworks and scaling strategies.",
+      tag: "Paid Media"
+    },
+    {
+      title: "Creator Partnerships & UGC Lead",
+      type: "Full-Time",
+      location: "Remote (Delhi / Bangalore)",
+      compensation: "Competitive + Incentives",
+      description: "Scout, negotiate, and orchestrate high-converting creator pipelines. Nurture relationships with 200+ tier-1 lifestyle creators.",
+      tag: "Creator Ops"
+    },
+    {
+      title: "Full-Stack CRO & Shopify Engineer",
+      type: "Full-Time",
+      location: "Remote",
+      compensation: "Competitive Salary",
+      description: "Build ultra-fast Next.js / Shopify landing pages, custom A/B checkout funnels, and sub-second web experiences.",
+      tag: "Engineering"
+    }
   ]
 };
 

@@ -27,25 +27,42 @@
   <input type="file" id="founderFileInput" accept="image/*" style="display:none">
 
   <!-- Navigation Header -->
-  <header class="site-header">
+  <header class="site-header" id="siteHeader">
     <div class="nav-wrap">
-      <a href="#" class="logo">CLYX<span>.</span></a>
+      <a href="index.html" class="logo">CLYX<span>.</span></a>
       <nav class="main-nav">
-        <a href="#engine">The Engine</a>
+        <a href="#about">About</a>
         <a href="#services">Services</a>
-        <a href="#how">Whitelisting</a>
-        <a href="#portfolio">Work</a>
-        <a href="#team">Founders</a>
-        <a href="#testimonials">Results</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#portfolio">Case Studies</a>
+        <a href="#how">Creators</a>
+        <a href="#blog">Blog</a>
+        <a href="#careers">Careers</a>
       </nav>
       <div class="nav-actions">
+        <button class="icon-btn" id="searchToggle" aria-label="Search">⌕</button>
         <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Dark/Light Mode">
           <span id="themeIcon">☀️</span> <span id="themeLabel">Light</span>
         </button>
-        <a href="#contact" class="btn btn-primary btn-small">Start a Project ↗</a>
+        <a href="#contact" class="btn btn-primary btn-small">Book a Growth Call ↗</a>
+        <button class="nav-burger" id="navBurger" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </div>
+    <div class="search-panel" id="searchPanel">
+      <input type="text" placeholder="Search case studies, services, creators, blog…" id="searchInput">
+    </div>
   </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#portfolio">Case Studies</a>
+    <a href="#how">Creators</a>
+    <a href="#blog">Blog</a>
+    <a href="#careers">Careers</a>
+    <a href="#contact">Contact</a>
+  </div>
 
   <main>
     <!-- HERO SECTION -->
@@ -336,22 +353,22 @@
       <div class="portfolio-grid" id="portfolioGrid"></div>
     </section>
 
-    <!-- FOUNDERS SECTION WITH IMAGE INSERTION OPTION -->
-    <section class="section team" id="team">
+    <!-- ABOUT / LEADERSHIP SECTION WITH IMAGE INSERTION OPTION -->
+    <section class="section team" id="about">
       <div class="section-head">
         <p class="eyebrow">Leadership</p>
         <h2>Small team. Direct founder access.</h2>
-        <p style="margin-top: 10px; max-width: 600px;">
+        <p style="margin-top: 10px; max-width: 600px; color: var(--text-secondary);">
           You collaborate directly with senior partners who have scaled eight-figure ad spend. Click any avatar to customize with your own photo.
         </p>
       </div>
       <div class="team-grid" id="teamGrid"></div>
     </section>
 
-    <!-- TESTIMONIALS MARQUEE (FASTER ANIMATION) -->
+    <!-- TESTIMONIALS MARQUEE (15S INFINITE LOOP) -->
     <section class="section testimonials" id="testimonials">
       <div class="section-head" style="text-align: center;">
-        <p class="eyebrow">Client Validation</p>
+        <p class="eyebrow">Client Results</p>
         <h2>What D2C founders say about CLYX.</h2>
       </div>
       <div class="testimonial-marquee">
@@ -359,15 +376,49 @@
       </div>
     </section>
 
+    <!-- FROM THE BLOG SECTION -->
+    <section class="section blog-teaser" id="blog">
+      <div class="section-head">
+        <p class="eyebrow">From the blog</p>
+        <h2>Notes on running paid + creator together.</h2>
+      </div>
+      <div class="blog-grid" id="blogGrid"></div>
+    </section>
+
+    <!-- CAREERS SECTION -->
+    <section class="section careers" id="careers">
+      <div class="section-head">
+        <p class="eyebrow">Join the team</p>
+        <h2>Careers at CLYX: Build the creator ad engine.</h2>
+        <p style="margin-top: 10px; max-width: 620px; color: var(--text-secondary);">
+          We are a high-output, remote-first team scaling 8-figure D2C brands. Direct ownership, competitive compensation, and zero bureaucracy.
+        </p>
+      </div>
+      <div class="careers-grid" id="careersGrid"></div>
+    </section>
+
+    <!-- NEWSLETTER STRIP -->
+    <section class="newsletter" id="newsletter">
+      <div class="newsletter-inner">
+        <p class="eyebrow">Stay ahead</p>
+        <h3>One email a month. No fluff.</h3>
+        <p>Actionable breakdowns of whitelisted creator campaigns, Meta ad teardowns, and creative frameworks that scale.</p>
+        <form id="newsletterForm" class="newsletter-form">
+          <input type="email" placeholder="you@brand.com" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
     <!-- CONVERSION CTA BAND -->
     <section class="cta-band" id="contact">
       <h2>Ready to turn your creators into scalable ad accounts?</h2>
-      <p style="max-width: 600px; color: rgba(255,255,255,0.85); font-size: 1.15rem;">
+      <p style="max-width: 620px; margin: 0 auto 32px; color: var(--text-secondary); font-size: 1.15rem;">
         Let's audit your current Meta/Google ad accounts and creator pipeline. We will map out a 90-day scaling roadmap for your brand.
       </p>
       <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
-        <a href="https://wa.me/919876543210" target="_blank" class="btn btn-primary btn-large">Chat On WhatsApp ↗</a>
-        <button class="btn btn-ghost btn-large" onclick="alert('30-min strategy consultation with CLYX Partners.')">Book 30-Min Strategy Call</button>
+        <a href="https://wa.me/919876543210" target="_blank" class="btn btn-primary btn-large">Book a Growth Call ↗</a>
+        <a href="mailto:hello@clyxmedia.com?subject=Growth Consultation - CLYX Media" class="btn btn-ghost btn-large">Email Founders</a>
       </div>
     </section>
   </main>
@@ -395,35 +446,49 @@
   <footer class="site-footer">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="#" class="logo">CLYX<span>.</span></a>
-        <p>Performance marketing &amp; creator whitelisting agency for high-growth D2C brands.</p>
+        <a href="index.html" class="logo">CLYX<span>.</span></a>
+        <p>Performance marketing &amp; creator ads agency.</p>
+        <div class="footer-social" style="display: flex; gap: 14px; margin-top: 16px;">
+          <a href="#" aria-label="Instagram" style="font-weight: 700; color: var(--text-secondary);">IG</a>
+          <a href="#" aria-label="LinkedIn" style="font-weight: 700; color: var(--text-secondary);">IN</a>
+          <a href="#" aria-label="Twitter" style="font-weight: 700; color: var(--text-secondary);">X</a>
+        </div>
       </div>
       <div class="footer-col">
-        <h5>Disciplines</h5>
-        <a href="#services">Influencer Marketing</a>
-        <a href="#services">Performance Marketing</a>
-        <a href="#services">UGC Content</a>
-        <a href="#services">Shopify Store CRO</a>
+        <h5>Company</h5>
+        <a href="#about">About</a>
+        <a href="#careers">Careers</a>
+        <a href="#blog">Blog</a>
+        <a href="#contact">Contact</a>
       </div>
       <div class="footer-col">
-        <h5>Work &amp; Proof</h5>
-        <a href="#portfolio">Featured Campaigns</a>
-        <a href="#how">The Whitelisting Engine</a>
-        <a href="#team">Team &amp; Partners</a>
-        <a href="#testimonials">Founder Reviews</a>
+        <h5>Work</h5>
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#portfolio">Case Studies</a>
+        <a href="#how">Creators</a>
       </div>
       <div class="footer-col">
-        <h5>Get In Touch</h5>
-        <p style="margin-bottom: 8px;">Direct Partner Line:</p>
-        <a href="mailto:hello@clyxmedia.com" style="font-weight: 700; color: var(--text-primary);">hello@clyxmedia.com</a>
-        <a href="https://wa.me/919876543210" target="_blank" style="color: var(--clyx-yellow); font-weight: 700; margin-top: 10px;">WhatsApp: +91 98765 43210</a>
+        <h5>Get in touch</h5>
+        <a href="mailto:hello@clyxmedia.com">hello@clyxmedia.com</a>
+        <a href="https://wa.me/919876543210" target="_blank" id="whatsappLink">WhatsApp us</a>
+        <a href="#contact" id="calendlyLink">Book a call</a>
       </div>
     </div>
     <div class="footer-bottom">
       <span>© <span id="year">2026</span> CLYX Media. All rights reserved.</span>
-      <div><a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a></div>
+      <div class="footer-legal"><a href="#">Privacy</a> · <a href="#">Terms</a></div>
     </div>
   </footer>
+
+  <!-- Cookie Consent Bar -->
+  <div class="cookie-bar" id="cookieBar">
+    <p>We use cookies to improve your experience and measure campaign performance.</p>
+    <div>
+      <button id="cookieAccept" class="btn btn-primary btn-small">Accept</button>
+      <button id="cookieDecline" class="btn btn-ghost btn-small">Decline</button>
+    </div>
+  </div>
 
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
