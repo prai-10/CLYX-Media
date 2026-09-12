@@ -320,20 +320,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === document.getElementById('modalBackdrop')) document.getElementById('modalBackdrop').classList.remove('open');
   });
 
-  // 10. Founders Section with Interactive Image Insertion Option
+  // 10. Founders / Leadership Section
   const teamGrid = document.getElementById('teamGrid');
-  const fileInput = document.getElementById('founderFileInput');
 
   function renderTeam() {
     if (!teamGrid) return;
-    teamGrid.innerHTML = CLYX_DATA.team.map((m, i) => `
-      <div class="founder-card">
+    teamGrid.innerHTML = CLYX_DATA.team.map((m) => `
+      <div class="founder-card" id="founder-${m.monogram.toLowerCase()}">
         <div>
           <div class="founder-top">
             <div class="founder-avatar-box">
-              <div class="founder-avatar-wrap" onclick="triggerFounderPhotoUpload(${i})" title="Click to insert/change photo">
-                <img src="${m.img}" alt="${m.name}" class="founder-avatar-img" id="founderImg-${i}">
-                <div class="founder-avatar-overlay">📷 Change</div>
+              <div class="founder-avatar-wrap">
+                <img src="${m.img}" alt="${m.name}" class="founder-avatar-img" loading="lazy">
               </div>
               <div>
                 <span class="founder-track-badge">${m.badge}</span>
@@ -345,41 +343,11 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="founder-bio">${m.bio}</p>
         </div>
         <div class="founder-footer">
-          <button class="founder-photo-btn" onclick="triggerFounderPhotoUpload(${i})">
-            <span>📷 Insert Photo</span>
-          </button>
-          <span>Direct Advisory ↗</span>
+          <span class="founder-firm-tag">CLYX Leadership</span>
+          <a href="#contact" class="founder-advisory-link">Direct Advisory ↗</a>
         </div>
       </div>
     `).join('');
-  }
-
-  window.triggerFounderPhotoUpload = function(index) {
-    activeFounderIndex = index;
-    const userChoice = confirm(`Would you like to upload a photo file from your device for ${CLYX_DATA.team[index].name}?\n\n(Click 'OK' to pick a file from your computer, or 'Cancel' to paste an image URL)`);
-    if (userChoice) {
-      fileInput.click();
-    } else {
-      const url = prompt(`Paste an image URL for ${CLYX_DATA.team[index].name}:`);
-      if (url && url.trim().length > 0) {
-        CLYX_DATA.team[index].img = url.trim();
-        renderTeam();
-      }
-    }
-  };
-
-  if (fileInput) {
-    fileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          CLYX_DATA.team[activeFounderIndex].img = event.target.result;
-          renderTeam();
-        };
-        reader.readAsDataURL(file);
-      }
-    });
   }
 
   renderTeam();
@@ -442,25 +410,235 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // 14. Search Panel Toggle & Real-time Filter
+  // 14. Interactive Right-Aligned Search Widget
   const searchToggle = document.getElementById('searchToggle');
-  const searchPanel = document.getElementById('searchPanel');
+  const searchDropdown = document.getElementById('searchDropdown');
   const searchInput = document.getElementById('searchInput');
-  if (searchToggle && searchPanel) {
-    searchToggle.addEventListener('click', () => {
-      searchPanel.classList.toggle('open');
-      if (searchPanel.classList.contains('open') && searchInput) {
-        searchInput.focus();
+  const searchClear = document.getElementById('searchClear');
+  const searchResults = document.getElementById('searchResults');
+  const searchQuickTags = document.getElementById('searchQuickTags');
+
+  function openSearch() {
+    if (!searchDropdown) return;
+    searchDropdown.classList.add('open');
+    if (searchToggle) searchToggle.classList.add('active');
+    if (searchInput) {
+      setTimeout(() => searchInput.focus(), 60);
+    }
+    renderSearchResults(searchInput ? searchInput.value.trim() : '');
+  }
+
+  function closeSearch() {
+    if (!searchDropdown) return;
+    searchDropdown.classList.remove('open');
+    if (searchToggle) searchToggle.classList.remove('active');
+  }
+
+  if (searchToggle) {
+    searchToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (searchDropdown && searchDropdown.classList.contains('open')) {
+        closeSearch();
+      } else {
+        openSearch();
       }
     });
   }
+
+  if (searchDropdown) {
+    searchDropdown.addEventListener('click', (e) => e.stopPropagation());
+  }
+
+  document.addEventListener('click', (e) => {
+    if (searchDropdown && searchDropdown.classList.contains('open')) {
+      if (!searchDropdown.contains(e.target) && e.target !== searchToggle && !searchToggle.contains(e.target)) {
+        closeSearch();
+      }
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && searchDropdown && searchDropdown.classList.contains('open')) {
+      closeSearch();
+    }
+  });
+
+  if (searchClear) {
+    searchClear.addEventListener('click', () => {
+      if (searchInput) {
+        searchInput.value = '';
+        searchClear.classList.remove('visible');
+        renderSearchResults('');
+        searchInput.focus();
+      }
+      filterPageCards('');
+    });
+  }
+
+  if (searchQuickTags) {
+    searchQuickTags.querySelectorAll('.search-tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        const query = tag.getAttribute('data-query');
+        if (searchInput && query) {
+          searchInput.value = query;
+          if (searchClear) searchClear.classList.add('visible');
+          renderSearchResults(query);
+          filterPageCards(query);
+        }
+      });
+    });
+  }
+
+  function filterPageCards(q) {
+    const term = (q || '').toLowerCase().trim();
+    document.querySelectorAll('.service-card, .portfolio-card, .founder-card, .blog-card, .career-card').forEach(card => {
+      const text = card.textContent.toLowerCase();
+      card.style.display = (!term || text.includes(term)) ? '' : 'none';
+    });
+  }
+
+  function highlightAndScrollTo(targetSelector, csIndex = null) {
+    closeSearch();
+    if (csIndex !== null && typeof window.openModal === 'function') {
+      window.openModal(csIndex);
+      return;
+    }
+    const target = document.querySelector(targetSelector);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      target.classList.remove('search-highlight-pulse');
+      void target.offsetWidth;
+      target.classList.add('search-highlight-pulse');
+      setTimeout(() => target.classList.remove('search-highlight-pulse'), 1800);
+    }
+  }
+
+  window.clyxNavigateSearch = function(selector, csIndex) {
+    highlightAndScrollTo(selector, csIndex !== null ? parseInt(csIndex, 10) : null);
+  };
+
+  function escapeHtml(str) {
+    return String(str || '').replace(/[&<>"']/g, function(m) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+    });
+  }
+
+  function renderSearchResults(query) {
+    if (!searchResults) return;
+    const q = (query || '').toLowerCase().trim();
+    if (searchClear) {
+      if (q.length > 0) searchClear.classList.add('visible');
+      else searchClear.classList.remove('visible');
+    }
+
+    if (!q) {
+      searchResults.innerHTML = `
+        <div class="search-empty-state">
+          Type to search case studies, services, creators, articles, and open careers.
+        </div>
+      `;
+      return;
+    }
+
+    const matches = [];
+
+    // Search Services
+    if (window.CLYX_DATA && CLYX_DATA.services) {
+      CLYX_DATA.services.forEach(s => {
+        if (s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q)) {
+          matches.push({
+            badge: 'Service',
+            title: s.title,
+            desc: s.desc,
+            selector: '#services'
+          });
+        }
+      });
+    }
+
+    // Search Portfolio / Case Studies
+    if (window.CLYX_DATA && CLYX_DATA.portfolio) {
+      CLYX_DATA.portfolio.forEach((p, idx) => {
+        if (p.client.toLowerCase().includes(q) || p.campaign.toLowerCase().includes(q) || p.results.toLowerCase().includes(q)) {
+          matches.push({
+            badge: 'Case Study',
+            title: `${p.client} — ${p.campaign}`,
+            desc: p.results,
+            selector: '#portfolio',
+            csIndex: idx
+          });
+        }
+      });
+    }
+
+    // Search Leadership
+    if (window.CLYX_DATA && CLYX_DATA.team) {
+      CLYX_DATA.team.forEach(t => {
+        if (t.name.toLowerCase().includes(q) || t.role.toLowerCase().includes(q) || t.bio.toLowerCase().includes(q)) {
+          matches.push({
+            badge: 'Leadership',
+            title: `${t.name} (${t.role})`,
+            desc: t.bio,
+            selector: '#about'
+          });
+        }
+      });
+    }
+
+    // Search Blog
+    if (window.CLYX_DATA && CLYX_DATA.blog) {
+      CLYX_DATA.blog.forEach(b => {
+        if (b.title.toLowerCase().includes(q) || b.excerpt.toLowerCase().includes(q)) {
+          matches.push({
+            badge: 'Blog',
+            title: b.title,
+            desc: b.excerpt,
+            selector: '#blog'
+          });
+        }
+      });
+    }
+
+    // Search Careers
+    if (window.CLYX_DATA && CLYX_DATA.careers) {
+      CLYX_DATA.careers.forEach(c => {
+        if (c.title.toLowerCase().includes(q) || c.dept.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q)) {
+          matches.push({
+            badge: 'Career',
+            title: `${c.title} · ${c.type}`,
+            desc: c.desc,
+            selector: '#careers'
+          });
+        }
+      });
+    }
+
+    if (matches.length === 0) {
+      searchResults.innerHTML = `
+        <div class="search-empty-state">
+          No matches found for "<strong>${escapeHtml(query)}</strong>". Try "Whitelisting", "Meta Ads", "TikTok", or "Careers".
+        </div>
+      `;
+      return;
+    }
+
+    searchResults.innerHTML = matches.slice(0, 6).map(m => `
+      <div class="search-result-item" onclick="clyxNavigateSearch('${m.selector}', ${m.csIndex !== undefined ? m.csIndex : 'null'})">
+        <span class="search-result-badge">${m.badge}</span>
+        <div class="search-result-content">
+          <div class="search-result-title">${escapeHtml(m.title)}</div>
+          <div class="search-result-desc">${escapeHtml(m.desc)}</div>
+        </div>
+        <span style="color: var(--text-muted); font-size: 0.9rem;">↗</span>
+      </div>
+    `).join('');
+  }
+
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
-      const q = e.target.value.toLowerCase().trim();
-      document.querySelectorAll('.service-card, .portfolio-card, .founder-card, .blog-card, .career-card').forEach(card => {
-        const text = card.textContent.toLowerCase();
-        card.style.display = (!q || text.includes(q)) ? '' : 'none';
-      });
+      const q = e.target.value;
+      renderSearchResults(q);
+      filterPageCards(q);
     });
   }
 
