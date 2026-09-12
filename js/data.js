@@ -21,7 +21,7 @@ const CLYX_DATA = {
       title: "AETHEL LUXURY STREETWEAR",
       category: "fashion",
       categoryName: "Fashion & Apparel",
-      deliverables: "TikTok UGC + Influencer Seeding + CRO",
+      deliverables: "Reels UGC + Influencer Seeding + CRO",
       heroImg: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop",
       results: { roas: "3.9X", revenue: "+310%", cpa: "-44%", reach: "6.8M" },
       summary: "Generated ₹1.2Cr in collection drops within 48 hours using viral streetwear transition reels and automated checkout countdowns.",
@@ -69,7 +69,7 @@ const CLYX_DATA = {
       title: "SOLSTICE ACTIVEWEAR",
       category: "fashion",
       categoryName: "Fashion & Athletics",
-      deliverables: "TikTok Spark Ads + Meta Whitelisting",
+      deliverables: "Viral Reels Ads + Meta Whitelisting",
       heroImg: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1000&auto=format&fit=crop",
       results: { roas: "3.8X", revenue: "+280%", cpa: "-35%", reach: "7.1M" },
       summary: "Executed high-intensity gym wear transition ads with 25 Hyrox & fitness creators generating ₹85L drop in 7 days.",
@@ -173,7 +173,7 @@ const CLYX_DATA = {
 
   careers: [
     {
-      title: "Senior Performance Media Buyer (Meta & TikTok)",
+      title: "Senior Performance Media Buyer (Meta & Google)",
       type: "Full-Time",
       location: "Remote / Hybrid (Mumbai)",
       compensation: "₹18L - ₹28L + Performance Bonus",

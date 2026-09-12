@@ -854,7 +854,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (matches.length === 0) {
       searchResults.innerHTML = `
         <div class="search-empty-state">
-          No matches found for "<strong>${escapeHtml(query)}</strong>". Try "Whitelisting", "Meta Ads", "TikTok", or "Careers".
+          No matches found for "<strong>${escapeHtml(query)}</strong>". Try "Whitelisting", "Meta Ads", "Reels UGC", or "Careers".
         </div>
       `;
       return;

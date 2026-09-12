@@ -772,6 +772,45 @@ html[data-theme="light"] .testimonial-meta .brand { color: var(--clyx-blue); }
 .footer-col a:hover { color: var(--clyx-yellow); transform: translateX(4px); }
 .footer-bottom { max-width: 1400px; margin: 0 auto; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); }
 
+/* Footer Social Media Icons */
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+.social-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+.social-icon-btn:hover {
+  background: var(--clyx-yellow);
+  color: #050814;
+  border-color: var(--clyx-yellow);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px var(--clyx-yellow-glow);
+}
+html[data-theme="light"] .social-icon-btn {
+  background: rgba(0, 58, 163, 0.05);
+  border-color: rgba(0, 58, 163, 0.16);
+  color: #003AA3;
+}
+html[data-theme="light"] .social-icon-btn:hover {
+  background: var(--clyx-blue);
+  color: #FFFFFF;
+  border-color: var(--clyx-blue);
+  box-shadow: 0 6px 18px rgba(0, 58, 163, 0.25);
+}
+
 /* Aesthetic Luxury WhatsApp Float (Matches CLYX Brand Palette) */
 .whatsapp-float {
   position: fixed;
@@ -930,12 +969,12 @@ html[data-theme="light"] .nav-search-btn.active {
   right: 0;
   width: 420px;
   max-width: calc(100vw - 32px);
-  background: var(--bg-card);
-  border: 1px solid var(--border-strong);
+  background: #080E24;
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: var(--radius-md);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 30px rgba(0, 58, 163, 0.15);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(0, 58, 163, 0.25);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
   padding: 18px;
   z-index: 1000;
   opacity: 0;
@@ -943,6 +982,12 @@ html[data-theme="light"] .nav-search-btn.active {
   transform: translateY(-8px) scale(0.97);
   transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s;
   pointer-events: none;
+}
+
+html[data-theme="light"] .search-dropdown-right {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 58, 163, 0.22);
+  box-shadow: 0 24px 60px rgba(0, 58, 163, 0.18), 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 .search-dropdown-right.open {
@@ -956,8 +1001,8 @@ html[data-theme="light"] .nav-search-btn.active {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--bg-secondary);
-  border: 1.5px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--radius-sm);
   padding: 10px 14px;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
@@ -968,6 +1013,11 @@ html[data-theme="light"] .nav-search-btn.active {
   box-shadow: 0 0 12px var(--clyx-yellow-glow);
 }
 
+html[data-theme="light"] .search-input-row {
+  background: #EEF2F9;
+  border-color: rgba(0, 58, 163, 0.15);
+}
+
 html[data-theme="light"] .search-input-row:focus-within {
   border-color: var(--clyx-blue);
   box-shadow: 0 0 12px rgba(0, 58, 163, 0.18);
@@ -976,22 +1026,30 @@ html[data-theme="light"] .search-input-row:focus-within {
 .search-input-row svg.search-field-icon {
   width: 18px;
   height: 18px;
-  color: var(--text-muted);
+  color: #94A3B8;
   flex-shrink: 0;
+}
+
+html[data-theme="light"] .search-input-row svg.search-field-icon {
+  color: #64748B;
 }
 
 .search-input-row input {
   flex: 1;
   border: none;
   background: transparent;
-  color: var(--text-primary);
+  color: #FFFFFF;
   font-family: var(--font-body);
   font-size: 0.95rem;
   outline: none;
 }
 
+html[data-theme="light"] .search-input-row input {
+  color: #0A1128;
+}
+
 .search-input-row input::placeholder {
-  color: var(--text-muted);
+  color: #64748B;
 }
 
 .search-clear-btn {
@@ -1021,7 +1079,11 @@ html[data-theme="light"] .search-input-row:focus-within {
   flex-wrap: wrap;
   margin-top: 12px;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="light"] .search-quick-tags {
+  border-bottom: 1px solid rgba(0, 58, 163, 0.1);
 }
 
 .quick-tag-label {
@@ -1029,8 +1091,12 @@ html[data-theme="light"] .search-input-row:focus-within {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-muted);
+  color: #94A3B8;
   margin-right: 4px;
+}
+
+html[data-theme="light"] .quick-tag-label {
+  color: #64748B;
 }
 
 .search-tag {
@@ -1038,9 +1104,9 @@ html[data-theme="light"] .search-input-row:focus-within {
   font-weight: 600;
   padding: 4px 10px;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #E2E8F0;
   cursor: pointer;
   transition: all var(--transition-fast);
 }
@@ -1049,6 +1115,12 @@ html[data-theme="light"] .search-input-row:focus-within {
   background: var(--clyx-yellow);
   color: #050814;
   border-color: var(--clyx-yellow);
+}
+
+html[data-theme="light"] .search-tag {
+  background: rgba(0, 58, 163, 0.06);
+  border-color: rgba(0, 58, 163, 0.15);
+  color: #003AA3;
 }
 
 html[data-theme="light"] .search-tag:hover {
@@ -1073,8 +1145,8 @@ html[data-theme="light"] .search-tag:hover {
   gap: 12px;
   padding: 10px 12px;
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   cursor: pointer;
   text-align: left;
   transition: all var(--transition-fast);
@@ -1082,9 +1154,19 @@ html[data-theme="light"] .search-tag:hover {
 }
 
 .search-result-item:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-strong);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
   transform: translateX(3px);
+}
+
+html[data-theme="light"] .search-result-item {
+  background: #F8FAFD;
+  border: 1px solid rgba(0, 58, 163, 0.08);
+}
+
+html[data-theme="light"] .search-result-item:hover {
+  background: #F0F4FA;
+  border-color: rgba(0, 58, 163, 0.2);
 }
 
 .search-result-badge {
@@ -1127,10 +1209,15 @@ html[data-theme="light"] .search-result-badge {
 }
 
 .search-empty-state {
-  padding: 20px 12px;
+  padding: 24px 14px;
   text-align: center;
-  font-size: 0.86rem;
-  color: var(--text-muted);
+  font-size: 0.88rem;
+  color: #94A3B8;
+  line-height: 1.6;
+}
+
+html[data-theme="light"] .search-empty-state {
+  color: #475569;
 }
 
 @keyframes clyxHighlightPulse {

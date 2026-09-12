@@ -32,7 +32,7 @@ const defaultItems: CoverflowItem[] = [
     id: "aethel-apparel",
     title: "AETHEL LUXURY STREETWEAR",
     tag: "#StreetwearDrop",
-    subtitle: "VIRAL TIKTOK CRO",
+    subtitle: "VIRAL REELS CRO",
     description: "Generated ₹1.2Cr in collection drops within 48 hours using viral streetwear transition reels.",
     imageUrl: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop",
     badge: "3.9X ROAS",
