@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLYX Media — Admin Control Center</title>
+  <meta name="description" content="Official content management and operations portal for CLYX Media.">
+  <meta name="robots" content="noindex, nofollow">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/admin.css?v=1.1">
+</head>
+<body>
+
+  <!-- ADMIN PASSCODE LOCK SCREEN (GATEKEEPER) -->
+  <div class="auth-gate-overlay" id="adminAuthOverlay">
+    <div class="auth-gate-card">
+      <div class="auth-gate-header">
+        <div class="admin-logo" style="justify-content:center; font-size:1.8rem; margin-bottom:6px;">
+          CLYX<span class="dot">.</span>
+        </div>
+        <div style="display:inline-block; margin-bottom:12px;">
+          <span class="admin-badge">Internal Staff Only</span>
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:var(--text-primary);">Restricted Control Center</h3>
+        <p style="font-size:0.82rem; color:var(--text-secondary); margin-top:4px;">Enter your administrator passcode to access website management.</p>
+      </div>
+
+      <form id="adminAuthForm" class="auth-gate-form">
+        <div class="form-group">
+          <label style="text-align:left;">Admin Passcode</label>
+          <input type="password" id="adminPassInput" class="form-control" placeholder="Enter passcode..." autocomplete="current-password" autofocus required>
+        </div>
+        <div id="authErrorMsg" class="auth-error-msg" style="display:none;"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%; padding:11px; margin-top:8px;">Unlock Control Center 🔓</button>
+      </form>
+
+      <div class="auth-gate-footer">
+        <span>Protected by CLYX Media Security & Zero-Trust Gate</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-header">
+      <a href="admin.html" class="admin-logo">
+        CLYX<span class="dot">.</span>
+      </a>
+      <span class="admin-badge">Admin</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Core Management</div>
+      <a class="nav-item active" data-tab="dashboard">
+        <span class="nav-item-icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-item" data-tab="campaigns">
+        <span class="nav-item-icon">🎬</span>
+        <span>Case Studies</span>
+      </a>
+      <a class="nav-item" data-tab="headlines">
+        <span class="nav-item-icon">⚡</span>
+        <span>Headlines & Stats</span>
+      </a>
+
+      <div class="nav-section-title">Content & Brand</div>
+      <a class="nav-item" data-tab="team">
+        <span class="nav-item-icon">👥</span>
+        <span>Leadership</span>
+      </a>
+      <a class="nav-item" data-tab="testimonials">
+        <span class="nav-item-icon">💬</span>
+        <span>Testimonials</span>
+      </a>
+      <a class="nav-item" data-tab="blog">
+        <span class="nav-item-icon">📝</span>
+        <span>Blog Articles</span>
+      </a>
+      <a class="nav-item" data-tab="careers">
+        <span class="nav-item-icon">💼</span>
+        <span>Careers Roster</span>
+      </a>
+
+      <div class="nav-section-title">Operations & Growth</div>
+      <a class="nav-item" data-tab="leads">
+        <span class="nav-item-icon">📥</span>
+        <span>Inquiries & CRM</span>
+        <span class="nav-item-badge" id="badgeLeadsCount">4</span>
+      </a>
+      <a class="nav-item" data-tab="settings">
+        <span class="nav-item-icon">⚙️</span>
+        <span>Database & Cloud</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="index.html" target="_blank" class="preview-site-btn">
+        <span>Preview Live Site ↗</span>
+      </a>
+      <div class="admin-user-card">
+        <div class="admin-avatar">CM</div>
+        <div class="admin-user-info">
+          <span class="admin-user-name">CLYX Founder</span>
+          <span class="admin-user-role">Super Admin • Live</span>
+        </div>
+        <button type="button" id="adminSignOutBtn" class="btn btn-secondary btn-sm" style="margin-left:auto; padding:4px 8px; font-size:0.7rem;" title="Lock Admin Control Center">Lock 🔒</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN VIEWPORT -->
+  <div class="admin-main">
+    
+    <!-- TOPBAR -->
+    <header class="admin-topbar">
+      <div class="topbar-left">
+        <h2 class="topbar-title" id="topbarTitle">Dashboard Overview</h2>
+      </div>
+
+      <div class="topbar-right">
+        <div class="sync-status">
+          <span class="sync-dot"></span>
+          <span>Synced with Live Website</span>
+        </div>
+
+        <button type="button" class="theme-toggle-btn" id="adminThemeToggle" aria-label="Toggle theme">☀️</button>
+      </div>
+    </header>
+
+    <!-- CONTENT PANES -->
+    <main class="admin-content">
+
+      <!-- TAB 1: DASHBOARD OVERVIEW -->
+      <section class="tab-pane active" id="tab-dashboard">
+        <div class="section-toolbar">
+          <div class="toolbar-title-wrap">
+            <h3>Overview & Growth Metrics</h3>
+            <p>Real-time health of your agency digital footprint.</p>
+          </div>
+          <div class="toolbar-actions">
+            <a href="index.html" target="_blank" class="btn btn-primary">View Live Website ↗</a>
+          </div>
+        </div>
+
+        <div class="stats-overview-grid">
+          <div class="metric-card">
+            <div class="metric-card-top">
+              <span class="metric-title">Portfolio Campaigns</span>
+              <span class="metric-icon">🎬</span>
+            </div>
+            <div class="metric-value" id="kpiCampaigns">7</div>
+            <span class="metric-delta">Active in 3D Coverflow</span>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-card-top">
+              <span class="metric-title">Incoming Inquiries</span>
+              <span class="metric-icon">📥</span>
+            </div>
+            <div class="metric-value" id="kpiLeads">4</div>
+            <span class="metric-delta">+2 new this week</span>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-card-top">
+              <span class="metric-title">Blended ROAS Average</span>
+              <span class="metric-icon">📈</span>
+            </div>
+            <div class="metric-value" id="kpiAvgROAS">4.2X</div>
+            <span class="metric-delta">Verified across creators</span>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-card-top">
+              <span class="metric-title">Published Articles</span>
+              <span class="metric-icon">📝</span>
+            </div>
+            <div class="metric-value" id="kpiArticles">3</div>
+            <span class="metric-delta">Live in blog feed</span>
+          </div>
+        </div>
+
+        <!-- Quick Admin Instructions Card -->
+        <div class="data-table-card" style="padding:24px; margin-bottom:28px; background:linear-gradient(135deg, rgba(255,222,89,0.06), rgba(0,58,163,0.06)); border:1px solid rgba(255,222,89,0.25);">
+          <h4 style="font-family:var(--font-display); font-size:1.1rem; color:var(--text-primary); margin-bottom:8px;">💡 How this Admin Panel Works for You:</h4>
+          <p style="font-size:0.88rem; line-height:1.6; color:var(--text-secondary); max-width:850px;">
+            Every single campaign, headline, statistic, founder profile, and client review you edit here is <strong>immediately synced</strong> with the live visitor website (<a href="index.html" target="_blank" style="color:var(--clyx-yellow); font-weight:700;">index.html</a>). You no longer need to hire or wait for a developer whenever you sign a new client, achieve a higher ROAS, or want to publish an article!
+          </p>
+        </div>
+      </section>
+
+      <!-- TAB 2: CAMPAIGNS & CASE STUDIES -->
+      <section class="tab-pane" id="tab-campaigns">
+        <div class="section-toolbar">
+          <div class="toolbar-title-wrap">
+            <h3>Campaigns & Case Studies</h3>
+            <p>Manage the 3D Coverflow carousel cards, ROAS statistics, and case study breakdowns.</p>
+          </div>
+          <div class="toolbar-actions">
+            <select id="campFilterCat" class="search-input" style="padding:6px 12px;">
+              <option value="all">All Categories</option>
+              <option value="fashion">Fashion & Apparel</option>
+              <option value="beauty">Beauty & Wellness</option>
+              <option value="food">Food & Beverage</option>
+              <option value="tech">Consumer Tech & Audio</option>
+            </select>
+            <input type="text" id="campSearch" class="search-input" placeholder="Search campaigns...">
+            <button type="button" class="btn btn-primary" id="addCampaignBtn">+ Add Campaign</button>
+          </div>
+        </div>
+
+        <div class="data-table-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width:64px;">Card Preview</th>
+                  <th>Brand Name & Deliverables</th>
+                  <th>Category</th>
+                  <th>ROAS</th>
+                  <th>Summary Preview</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="campaignsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: HEADLINES & STAT COUNTERS -->
+      <section class="tab-pane" id="tab-headlines">
+        <div class="section-toolbar">
+          <div class="toolbar-title-wrap">
+            <h3>Hero Headlines & Big Stat Counters</h3>
+            <p>Edit the main hero copy and the 4 animated counter cards on the landing page.</p>
+          </div>
+          <div class="toolbar-actions">
+            <button type="button" class="btn btn-primary" id="saveHeadlinesBtn">Save Headlines & Stats</button>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+          <!-- Hero Section Card -->
+          <div class="data-table-card" style="padding:24px;">
+            <h4 style="font-family:var(--font-display); font-size:1.1rem; margin-bottom:16px;">Hero Section Headlines</h4>
+            
+            <div class="form-group" style="margin-bottom:14px;">
+              <label>Eyebrow Tag</label>
+              <input type="text" id="h_eyebrow" class="form-control">
+            </div>
+
+            <div class="form-group" style="margin-bottom:14px;">
+              <label>Headline Line 1</label>
+              <input type="text" id="h_line1" class="form-control">
+            </div>
+
+            <div class="form-group" style="margin-bottom:14px;">
+              <label>Headline Line 2 (Accent Styled)</label>
+              <input type="text" id="h_line2" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label>Hero Subtitle Paragraph</label>
+              <textarea id="h_sub" class="form-control" style="min-height:90px;"></textarea>
+            </div>
+          </div>
+
+          <!-- 4 Stat Counters Card -->
+          <div class="data-table-card" style="padding:24px;">
+            <h4 style="font-family:var(--font-display); font-size:1.1rem; margin-bottom:16px;">The 4 Animated Stat Counters</h4>
+
+            <!-- Stat 1 -->
+            <div style="padding:12px; background:var(--bg-input); border-radius:var(--radius-sm); margin-bottom:12px; border:1px solid var(--border-subtle);">
+              <strong style="font-size:0.8rem; color:var(--clyx-yellow);">COUNTER #1 (Ad Spend)</strong>
+              <div class="form-row-4" style="margin-top:6px;">
+                <input type="text" id="stat_0_prefix" class="form-control btn-sm" placeholder="Prefix (₹)">
+                <input type="number" id="stat_0_target" class="form-control btn-sm" placeholder="Target (45)">
+                <input type="text" id="stat_0_suffix" class="form-control btn-sm" placeholder="Suffix (Cr+)">
+                <input type="text" id="stat_0_label" class="form-control btn-sm" placeholder="Label">
+              </div>
+              <input type="text" id="stat_0_detail" class="form-control btn-sm" style="margin-top:6px;" placeholder="Subtext detail">
+            </div>
+
+            <!-- Stat 2 -->
+            <div style="padding:12px; background:var(--bg-input); border-radius:var(--radius-sm); margin-bottom:12px; border:1px solid var(--border-subtle);">
+              <strong style="font-size:0.8rem; color:var(--clyx-yellow);">COUNTER #2 (Average ROAS)</strong>
+              <div class="form-row-4" style="margin-top:6px;">
+                <input type="text" id="stat_1_prefix" class="form-control btn-sm" placeholder="Prefix">
+                <input type="number" step="0.1" id="stat_1_target" class="form-control btn-sm" placeholder="Target (3.4)">
+                <input type="text" id="stat_1_suffix" class="form-control btn-sm" placeholder="Suffix (X)">
+                <input type="text" id="stat_1_label" class="form-control btn-sm" placeholder="Label">
+              </div>
+              <input type="text" id="stat_1_detail" class="form-control btn-sm" style="margin-top:6px;" placeholder="Subtext detail">
+            </div>
+
+            <!-- Stat 3 -->
+            <div style="padding:12px; background:var(--bg-input); border-radius:var(--radius-sm); margin-bottom:12px; border:1px solid var(--border-subtle);">
+              <strong style="font-size:0.8rem; color:var(--clyx-yellow);">COUNTER #3 (Active Creators)</strong>
+              <div class="form-row-4" style="margin-top:6px;">
+                <input type="text" id="stat_2_prefix" class="form-control btn-sm" placeholder="Prefix">
+                <input type="number" id="stat_2_target" class="form-control btn-sm" placeholder="Target (250)">
+                <input type="text" id="stat_2_suffix" class="form-control btn-sm" placeholder="Suffix (+)">
+                <input type="text" id="stat_2_label" class="form-control btn-sm" placeholder="Label">
+              </div>
+              <input type="text" id="stat_2_detail" class="form-control btn-sm" style="margin-top:6px;" placeholder="Subtext detail">
+            </div>
+
+            <!-- Stat 4 -->
+            <div style="padding:12px; background:var(--bg-input); border-radius:var(--radius-sm); border:1px solid var(--border-subtle);">
+              <strong style="font-size:0.8rem; color:var(--clyx-yellow);">COUNTER #4 (Revenue Generated)</strong>
+              <div class="form-row-4" style="margin-top:6px;">
+                <input type="text" id="stat_3_prefix" class="form-control btn-sm" placeholder="Prefix (₹)">
+                <input type="number" id="stat_3_target" class="form-control btn-sm" placeholder="Target (180)">
+                <input type="text" id="stat_3_suffix" class="form-control btn-sm" placeholder="Suffix (Cr+)">
+                <input type="text" id="stat_3_label" class="form-control btn-sm" placeholder="Label">
+              </div>
+              <input type="text" id="stat_3_detail" class="form-control btn-sm" style="margin-top:6px;" placeholder="Subtext detail">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: LEADERSHIP & TEAM -->
+      <section class="tab-pane" id="tab-team">
+        <div class="section-toolbar">
+          <div class="toolbar-title-wrap">
+            <h3>Leadership & Partners</h3>
+            <p>Update founder photos, designations, bios, and direct contact options.</p>
+          </div>
+        </div>
+
+        <div class="data-table-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width:64px;">Avatar</th>
+                  <th>Name & Monogram</th>
+                  <th>Title</th>
+                  <th>Bio</th>
+                  <th style="text-align:right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="teamTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: TESTIMONIALS -->
+      <section class="tab-pane" id="tab-testimonials">
+        <div class="section-toolbar">
+          <div class="toolbar-title-wrap">
+            <h3>Client Reviews & Testimonials</h3>
+            <p>Manage the continuous 15-second infinite testimonial marquee.</p>
+          </div>
+          <div class="toolbar-actions">
+            <button type="button" class="btn btn-primary" id="addTestiBtn">+ Add Testimonial</button>
+          </div>
+        </div>
+
+        <div class="data-table-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Client & Brand</th>
+                  <th>Quote</th>
+                  <th>Metric Tag</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="testiTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: BLOG ARTICLES -->
+      <section class="tab-pane" id="tab-blog">
+        <div class="section-toolbar">
+          <div class="toolbar-title-wrap">
+            <h3>Blog Articles & Guides</h3>
+            <p>Publish educational content and case study breakdowns to the website.</p>
+          </div>
+          <div class="toolbar-actions">
+            <button type="button" class="btn btn-primary" id="addBlogBtn">+ Publish Article</button>
+          </div>
+        </div>
+
+        <div class="data-table-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width:64px;">Cover</th>
+                  <th>Article Title</th>
+                  <th>Category</th>
+                  <th>Summary Excerpt</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="blogTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: CAREERS -->
+      <section class="tab-pane" id="tab-careers">
+        <div class="section-toolbar">
+          <div class="toolbar-title-wrap">
+            <h3>Careers & Job Postings</h3>
+            <p>Post open agency positions to attract top media buyers and creators.</p>
+          </div>
+          <div class="toolbar-actions">
+            <button type="button" class="btn btn-primary" id="addCareerBtn">+ Post Role</button>
+          </div>
+        </div>
+
+        <div class="data-table-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Job Title & Location</th>
+                  <th>Department</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="careersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 8: LEADS INBOX (CRM) -->
+      <section class="tab-pane" id="tab-leads">
+        <div class="section-toolbar">
+          <div class="toolbar-title-wrap">
+            <h3>Inquiries & CRM Leads Inbox</h3>
+            <p>Incoming client requests from the website forms and chat concierge.</p>
+          </div>
+          <div class="toolbar-actions">
+            <button type="button" class="btn btn-secondary" id="exportLeadsCsvBtn">📥 Export to CSV</button>
+          </div>
+        </div>
+
+        <div class="data-table-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Prospect & Contact</th>
+                  <th>Brand Name</th>
+                  <th>Monthly Spend</th>
+                  <th>Service Interested</th>
+                  <th>Date</th>
+                  <th>Pipeline Status</th>
+                  <th style="text-align:right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="leadsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 9: SETTINGS & SUPABASE -->
+      <section class="tab-pane" id="tab-settings">
+        <div class="section-toolbar">
+          <div class="toolbar-title-wrap">
+            <h3>Cloud Database & Media Settings</h3>
+            <p>Configure Supabase, Cloudinary, and manage website backup data.</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+          <!-- Supabase Credentials -->
+          <div class="data-table-card" style="padding:24px;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+              <span style="font-size:1.4rem;">⚡</span>
+              <h4 style="font-family:var(--font-display); font-size:1.15rem;">Supabase PostgreSQL Connection</h4>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:16px;">
+              Plug in your Supabase project credentials to automatically store data in PostgreSQL with Row-Level Security.
+            </p>
+
+            <div class="form-group" style="margin-bottom:14px;">
+              <label>Supabase Project URL</label>
+              <input type="text" id="supUrlInput" class="form-control" placeholder="https://your-project.supabase.co">
+            </div>
+
+            <div class="form-group" style="margin-bottom:18px;">
+              <label>Supabase Anon Public API Key</label>
+              <input type="password" id="supKeyInput" class="form-control" placeholder="eyJhbGciOi...">
+            </div>
+
+            <button type="button" class="btn btn-primary" id="connectSupabaseBtn">Connect & Verify Supabase</button>
+          </div>
+
+          <!-- Data Backup & Reset -->
+          <div class="data-table-card" style="padding:24px;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+              <span style="font-size:1.4rem;">💾</span>
+              <h4 style="font-family:var(--font-display); font-size:1.15rem;">Data Backup & Reset</h4>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:20px;">
+              Download a full JSON export of all your website data, or reset back to default settings at any time.
+            </p>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <button type="button" class="btn btn-secondary" id="exportBackupBtn">
+                <span>Export All Website Data (JSON)</span>
+              </button>
+
+              <hr style="border:none; border-top:1px solid var(--border-subtle); margin:8px 0;">
+
+              <div>
+                <strong style="color:var(--clyx-red); font-size:0.85rem; display:block; margin-bottom:4px;">Factory Reset:</strong>
+                <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:10px;">Reverts all custom edits made in this admin panel back to original initial code defaults.</p>
+                <button type="button" class="btn btn-danger btn-sm" id="resetDefaultsBtn">Reset to Factory Defaults</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Security & Passcode Settings -->
+          <div class="data-table-card" style="padding:24px; grid-column:1 / -1; margin-top:8px;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+              <span style="font-size:1.4rem;">🔒</span>
+              <h4 style="font-family:var(--font-display); font-size:1.15rem;">Admin Access Passcode</h4>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:16px;">
+              Control the private access passcode required to unlock this control center. Default: <code style="color:var(--clyx-yellow);">clyx2026</code>
+            </p>
+            <div class="form-row" style="max-width:540px;">
+              <div class="form-group">
+                <label>New Passcode</label>
+                <input type="password" id="newAdminPassInput" class="form-control" placeholder="Enter new secret passcode...">
+              </div>
+              <div class="form-group" style="justify-content:flex-end;">
+                <label>&nbsp;</label>
+                <button type="button" class="btn btn-primary" id="updatePasscodeBtn">Update Passcode</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- REUSABLE EDIT MODAL -->
+  <div class="modal-backdrop" id="editModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h4 id="modalTitle">Edit Item</h4>
+        <button type="button" class="modal-close-btn" id="modalCloseBtn">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-secondary" id="modalCancelBtn">Cancel</button>
+        <button type="button" class="btn btn-primary" id="modalSaveBtn">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <!-- Data and Admin Logic Scripts -->
+  <script src="js/data.js?v=3.0"></script>
+  <script src="js/admin.js?v=1.0"></script>
+</body>
+</html>
