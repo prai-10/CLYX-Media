@@ -110,8 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const translateY = (1 - progress) * 35;
       macbook.style.transform = `rotateX(${rotateX.toFixed(2)}deg) scale(${scale.toFixed(3)}) translateY(${translateY.toFixed(1)}px)`;
       badges.forEach((b, i) => {
-        const dir = i % 2 === 0 ? 1 : -1;
-        b.style.transform = `translate3d(${(1 - progress) * 45 * dir}px, ${(1 - progress) * 25}px, 0)`;
+        const dir = i % 2 === 0 ? -1 : 1;
+        b.style.transform = `translate3d(${(1 - progress) * 25 * dir}px, ${(1 - progress) * 15}px, 0)`;
       });
     }
     window.addEventListener('scroll', onScroll, { passive: true });
