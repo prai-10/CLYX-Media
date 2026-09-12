@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function clampPos(p, count) {
-      if (loop || count <= 1) return p;
+      if ((loop && count >= 4) || count <= 1) return p;
       return Math.max(0, Math.min(count - 1, p));
     }
 
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       cards.forEach((card, index) => {
         let offset = index - pos;
-        if (loop && count > 1) {
+        if (loop && count >= 4) {
           offset = ((offset % count) + count) % count;
           if (offset > count / 2) offset -= count;
         }
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         card.style.transform = `translateX(calc(-50% + ${offset * pitch}px)) translateZ(${-depth * cardWidth * ramp}px) rotateY(${-tilt}deg)`;
 
-        const edge = (loop && count > 1) ? Math.min(1, Math.max(0, count / 2 - distance)) : 1;
+        const edge = (loop && count >= 4) ? Math.min(1, Math.max(0, count / 2 - distance)) : 1;
         card.style.opacity = String(Math.max(0, 1 - fade * distance) * edge);
         card.style.zIndex = String(Math.round(100 - distance));
 
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function goTo(index) {
       const count = currentItems.length;
       if (!count) return;
-      const nextTarget = (loop && count > 1)
+      const nextTarget = (loop && count >= 4)
         ? index + Math.round((target - index) / count) * count
         : index;
       settle(clampPos(nextTarget, count));
@@ -491,19 +491,45 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: false });
 
-    // Side Chevrons & Top Section Nav Buttons
+    // Side Chevrons Overlay (controls card navigation within carousel)
     if (sidePrevBtn) sidePrevBtn.addEventListener('click', () => nudge(-1));
     if (sideNextBtn) sideNextBtn.addEventListener('click', () => nudge(1));
-    if (prevBtn) prevBtn.addEventListener('click', () => nudge(-1));
-    if (nextBtn) nextBtn.addEventListener('click', () => nudge(1));
 
-    // Filter Tabs
+    // Category Tabs & Header Arrows (Category cycling & tab highlighting)
+    let currentCategory = 'all';
+    const categoryList = Array.from(tabs).map(t => t.getAttribute('data-filter')).filter(Boolean);
+
+    function selectCategory(categoryKey) {
+      currentCategory = categoryKey;
+      tabs.forEach(t => {
+        const isActive = t.getAttribute('data-filter') === categoryKey;
+        t.classList.toggle('active', isActive);
+      });
+      renderCoverflow(categoryKey);
+    }
+
+    // Top Section Nav Arrows (cycle through categories)
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        const idx = categoryList.indexOf(currentCategory);
+        const prevIdx = (idx - 1 + categoryList.length) % categoryList.length;
+        selectCategory(categoryList[prevIdx]);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        const idx = categoryList.indexOf(currentCategory);
+        const nextIdx = (idx + 1) % categoryList.length;
+        selectCategory(categoryList[nextIdx]);
+      });
+    }
+
+    // Filter Tabs Click
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
         const filter = tab.getAttribute('data-filter') || 'all';
-        renderCoverflow(filter);
+        selectCategory(filter);
       });
     });
 
@@ -514,7 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeObserver.observe(viewport);
 
     // Initial render
-    renderCoverflow('all');
+    selectCategory('all');
 
     window.handleCardClick = function(id) {
       if (dragState && dragState.hasMoved) return;
