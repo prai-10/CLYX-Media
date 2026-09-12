@@ -1,20 +1,45 @@
-# CLYX Media — Performance Marketing & Creator Ads Agency
+# CLYX Media
 
-> **We turn organic clips into scaled accounts.**  
-> Official web platform for CLYX Media, specializing in creator whitelisting, performance marketing, UGC content pipelines, and conversion-built web experiences for high-growth D2C brands.
+Official digital platform for **CLYX Media** — a performance marketing and creator whitelisting agency partnering with high-growth Direct-to-Consumer (D2C) brands.
+
+[![Live Site](https://img.shields.io/badge/Live%20Platform-prai--10.github.io%2FCLYX--Media-FFDE59?style=flat-square&logo=github&logoColor=050814)](https://prai-10.github.io/CLYX-Media/)
+[![License](https://img.shields.io/badge/License-Proprietary-003AA3?style=flat-square)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-10B981?style=flat-square)]()
 
 ---
 
-## 🌟 Key Features
+## 🌐 Live Platform
 
-- **Dynamic Hero Section:** Strict dual-line kinetic headline with interactive light/dark mode accent hover highlights and floating 3D parallax creator clip stack.
-- **3D Hacker Villa Macbook Engine:** Interactive 3D perspective scroll tilt showcasing the live Meta & Google Ads performance analytics dashboard.
-- **Dynamic Campaigns Carousel:** Horizontal multi-mode navigation (mouse wheel, click-and-drag, arrow controls) with dynamic active center card pop-up magnification and zero scrollbar clutter.
-- **Interactive Founder Roster:** Customizable leadership cards with direct in-browser photo insertion (local device upload via HTML5 `FileReader` + direct URL support).
-- **15s D2C Testimonial Marquee:** High-energy infinite testimonial reel delivering rapid social proof.
-- **Luxury Brand-Matched WhatsApp Launcher:** Dual-theme frosted glass pill launcher with live pulsing availability dot.
-- **Centralized Data Layer:** All case studies, ROAS statistics, founder bios, and reviews are separated into `js/data.js` for instant updates.
-- **Dual Mode System:** Smooth, persistent Dark Mode (Obsidian Carbon) and Light Mode (Clean Editorial with Royal Blue `#003AA3` & Electric Yellow `#FFDE59` highlights).
+* **Production URL:** [https://prai-10.github.io/CLYX-Media/](https://prai-10.github.io/CLYX-Media/)
+
+---
+
+## 📌 Overview
+
+CLYX Media pairs organic creator storytelling with data-backed paid distribution (Meta, Google, and TikTok ad ecosystems). This repository contains the production agency showcase and client portal, built from the ground up with zero framework overhead for instant page loads, smooth 60fps animations, and a seamless responsive experience across all screen sizes.
+
+---
+
+## ⚡ Key Features & Technical Architecture
+
+* **Zero-Dependency Core:** Built with pure semantic HTML5, modern CSS3, and vanilla ES6+ JavaScript. No bloated bundle sizes or hydration delays—ensuring sub-second load times and high Core Web Vitals scores.
+* **Interactive 3D Campaign Carousel:** Custom-engineered coverflow carousel featuring smooth touch/drag physics, category filtering (`Fashion`, `Beauty`, `Food`, `Tech`), and active center-card focus calibrated to fit full case study metrics cleanly within the viewport.
+* **Interactive 3D Laptop Showcase:** Scroll-responsive 3D perspective display demonstrating agency analytics dashboards, creator benchmarks, and live ad attribution metrics.
+* **Decoupled Data Architecture (`js/data.js`):** Centralized data layer managing all case studies, leadership profiles, client testimonials, insights, and career openings. Completely decoupled from presentation for easy maintenance and future headless CMS or database integration.
+* **Persistent Dual-Theme Engine:** Custom Dark Mode (deep navy `#050814` with electric yellow accents) and Light Mode (clean editorial layout with royal blue accents), saved persistently via `localStorage`.
+* **Instant Global Search:** Fast client-side search modal that indexes services, case studies, team members, articles, and open positions in real time.
+
+---
+
+## 🛠️ Technology Stack
+
+| Component | Technology |
+| :--- | :--- |
+| **Frontend** | Semantic HTML5, Vanilla JavaScript (ES6+) |
+| **Styling** | Modern CSS3 (CSS Variables, Flexbox, CSS Grid, 3D Perspective Transforms) |
+| **Typography** | Space Grotesk (Headings) & Inter (Body UI) |
+| **Media & Icons** | SVG Vector Icons, Optimized WebP Assets |
+| **Hosting** | GitHub Pages (with `.nojekyll` configuration) |
 
 ---
 
@@ -22,42 +47,39 @@
 
 ```
 CLYX-Media/
-├── index.html            # Main semantic HTML entry point
+├── index.html            # Main semantic webpage
 ├── css/
-│   └── style.css         # Complete design system, layouts, animations & responsive rules
+│   └── style.css         # Design system, theme variables & responsive styles
 ├── js/
-│   ├── data.js           # Centralized client data store (portfolio campaigns, founders, reviews)
-│   └── main.js           # Core UI logic (theme toggle, 3D laptop tilt, pop-up carousel, cursor, upload)
-├── .gitignore            # Excludes node_modules/ and temporary build caches
-├── .nojekyll             # Enables zero-config static hosting on GitHub Pages
+│   ├── data.js           # Centralized content store (campaigns, team, testimonials, etc.)
+│   └── main.js           # UI interactions, carousel physics, theme toggle & search
+├── .nojekyll             # Prevents Jekyll processing on GitHub Pages
 └── README.md             # Project documentation
 ```
 
 ---
 
-## 🚀 Live Deployment on GitHub Pages
+## 💻 Local Development
 
-1. Navigate to repository **Settings > Pages**.
-2. Under **Build and deployment > Source**, select **Deploy from a branch**.
-3. Select branch **`main`** and folder **`/ (root)`**.
-4. Click **Save**. The live URL will be active at:
-   ```
-   https://prai-10.github.io/CLYX-Media/
-   ```
-
----
-
-## 🛠️ Local Development
-
-Simply open `index.html` in any modern web browser:
+No package manager or build pipeline is required. Simply clone the repository and launch with any static server:
 
 ```bash
-# Optional: Serve with any static server
+# Clone the repository
+git clone https://github.com/prai-10/CLYX-Media.git
+
+# Navigate to the project directory
+cd CLYX-Media
+
+# Run with a local HTTP server
 npx serve .
 # or
 python -m http.server 3000
 ```
 
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
 ---
+
+## 📄 License & Ownership
 
 © 2026 CLYX Media. All rights reserved.
