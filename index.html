@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=2.3">
 </head>
 <body>
 
@@ -508,15 +508,19 @@
     </div>
   </footer>
 
-  <!-- Cookie Consent Card (Bottom-Right Standard) -->
-  <div class="cookie-bar" id="cookieBar">
-    <div class="cookie-bar-header">
-      <span>🍪</span> Cookie Preferences
+  <!-- Cookie Consent Pop-Up Card (Floating on the Right Side) -->
+  <div class="cookie-popup cookie-bar" id="cookieBar" style="position: fixed; bottom: 88px; right: 24px; left: auto; width: 370px; max-width: calc(100vw - 32px); z-index: 10005; border-radius: 20px;">
+    <button type="button" class="cookie-close-btn" id="cookieCloseBtn" aria-label="Dismiss cookie notice">✕</button>
+    <div class="cookie-popup-header">
+      <span class="cookie-emoji">🍪</span>
+      <h4>Cookie Preferences</h4>
     </div>
-    <p>We use cookies and digital tracking to analyze site traffic, optimize creator ad attribution, and deliver high-performance campaigns for D2C brands.</p>
-    <div class="cookie-bar-actions">
-      <button id="cookieAcceptAll" class="btn btn-primary">Accept All Cookies</button>
-      <button id="cookieEssential" class="btn btn-ghost">Essential Cookies Only</button>
+    <p class="cookie-popup-desc">
+      We use cookies and digital tracking to analyze site traffic, optimize creator ad attribution, and deliver high-performance campaigns for D2C brands.
+    </p>
+    <div class="cookie-popup-actions">
+      <button type="button" id="cookieAcceptAll" class="btn btn-primary cookie-btn">Accept All Cookies</button>
+      <button type="button" id="cookieEssential" class="btn btn-ghost cookie-btn">Essential Cookies Only</button>
     </div>
   </div>
 

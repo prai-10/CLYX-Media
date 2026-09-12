@@ -654,15 +654,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 16. Cookie Consent Card (Accept All & Essential Only)
+  // 16. Cookie Consent Pop-Up Card (Accept All, Essential Only, and Close)
   const cookieBar = document.getElementById('cookieBar');
   const cookieAcceptAll = document.getElementById('cookieAcceptAll') || document.getElementById('cookieAccept');
   const cookieEssential = document.getElementById('cookieEssential') || document.getElementById('cookieDecline');
+  const cookieCloseBtn = document.getElementById('cookieCloseBtn');
+
   if (cookieBar) {
     const consent = localStorage.getItem('clyx_cookie_consent');
     if (consent) {
       cookieBar.classList.add('hidden');
     }
+
     if (cookieAcceptAll) {
       cookieAcceptAll.addEventListener('click', () => {
         localStorage.setItem('clyx_cookie_consent', 'all');
@@ -672,6 +675,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cookieEssential) {
       cookieEssential.addEventListener('click', () => {
         localStorage.setItem('clyx_cookie_consent', 'essential');
+        cookieBar.classList.add('hidden');
+      });
+    }
+    if (cookieCloseBtn) {
+      cookieCloseBtn.addEventListener('click', () => {
+        localStorage.setItem('clyx_cookie_consent', 'dismissed');
         cookieBar.classList.add('hidden');
       });
     }
