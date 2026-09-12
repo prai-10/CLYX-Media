@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="css/style.css?v=2.3">
+  <link rel="stylesheet" href="css/style.css?v=2.4">
 </head>
 <body>
 
@@ -354,7 +354,7 @@
       </div>
     </section>
 
-    <!-- PORTFOLIO SECTION (HORIZONTAL SCROLLABLE & REDUCED SIZE) -->
+    <!-- PORTFOLIO SECTION (3D COVERFLOW CAROUSEL) -->
     <section class="section portfolio" id="portfolio">
       <div class="section-head split">
         <div>
@@ -362,7 +362,7 @@
           <h2>Campaigns, not concepts.</h2>
         </div>
         <div class="portfolio-controls-wrap">
-          <div class="filter-tabs">
+          <div class="filter-tabs" id="portfolioFilterTabs">
             <button class="filter-tab active" data-filter="all">All</button>
             <button class="filter-tab" data-filter="fashion">Fashion</button>
             <button class="filter-tab" data-filter="beauty">Beauty</button>
@@ -376,8 +376,26 @@
         </div>
       </div>
 
-      <!-- Horizontal Scrollable Track -->
-      <div class="portfolio-grid" id="portfolioGrid"></div>
+      <!-- 3D Coverflow Carousel Container -->
+      <div class="coverflow-wrap" id="coverflowWrap">
+        <div class="coverflow-viewport" id="coverflowViewport" tabindex="0" role="region" aria-label="Campaigns 3D Coverflow">
+          <div class="coverflow-stage" id="coverflowStage"></div>
+        </div>
+
+        <!-- Coverflow Navigation Chevrons Overlay -->
+        <button type="button" class="coverflow-nav-btn prev" id="coverflowNavPrev" aria-label="Previous slide">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button type="button" class="coverflow-nav-btn next" id="coverflowNavNext" aria-label="Next slide">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+
+        <!-- Active Slide Caption / Meta Details Below -->
+        <div class="coverflow-caption-panel" id="coverflowCaption"></div>
+
+        <!-- Pagination Indicator Dots -->
+        <div class="coverflow-dots" id="coverflowDots"></div>
+      </div>
     </section>
 
     <!-- ABOUT / LEADERSHIP SECTION WITH IMAGE INSERTION OPTION -->
@@ -386,7 +404,7 @@
         <p class="eyebrow">Leadership</p>
         <h2>Small team. Direct founder access.</h2>
         <p style="margin-top: 10px; max-width: 600px; color: var(--text-secondary);">
-          You collaborate directly with senior partners who have scaled eight-figure ad spend. Click any avatar to customize with your own photo.
+          You collaborate directly with senior partners who have scaled eight-figure ad spend across high-growth categories.
         </p>
       </div>
       <div class="team-grid" id="teamGrid"></div>
@@ -524,7 +542,7 @@
     </div>
   </div>
 
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/data.js?v=2.4"></script>
+  <script src="js/main.js?v=2.4"></script>
 </body>
 </html>

@@ -265,82 +265,314 @@ html[data-theme="light"] .how-num { color: var(--clyx-blue); }
 .filter-tab { padding: 8px 16px; border-radius: var(--radius-full); font-family: var(--font-display); font-size: 0.82rem; font-weight: 600; background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-subtle); transition: all var(--transition-fast); }
 .filter-tab.active, .filter-tab:hover { background: var(--clyx-yellow); color: #050814; border-color: var(--clyx-yellow); }
 
-/* Horizontal Carousel Container - NO HORIZONTAL BAR + GRAB DRAG */
-.portfolio-grid {
-  display: flex;
-  gap: 28px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding: 32px 24px 44px;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
-  cursor: grab;
-}
-.portfolio-grid::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-}
-.portfolio-grid.grabbing {
-  cursor: grabbing !important;
-  user-select: none;
-  scroll-snap-type: none;
+/* ==========================================================================
+   3D COVERFLOW CAROUSEL (ALBUM RAKE ENGINE)
+   ========================================================================== */
+.coverflow-wrap {
+  --cf-card: clamp(230px, 28vw, 340px);
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 20px auto 0;
+  overflow: visible;
 }
 
-/* Reduced Size Portfolio Cards with Dynamic Pop-Up Enlargement */
-.portfolio-card {
-  flex: 0 0 330px;
-  width: 330px;
-  scroll-snap-align: center;
+@media (max-width: 640px) {
+  .coverflow-wrap {
+    --cf-card: clamp(180px, 64vw, 260px);
+  }
+}
+
+.coverflow-viewport {
   position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 40px 0 30px;
+  cursor: grab;
+  outline: none;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.coverflow-viewport:focus-visible {
+  outline: 2px solid var(--clyx-yellow);
   border-radius: var(--radius-lg);
+}
+
+.coverflow-viewport.is-dragging {
+  cursor: grabbing !important;
+}
+
+.coverflow-stage {
+  position: relative;
+  width: 100%;
+  height: var(--cf-card);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Individual 3D Coverflow Card */
+.coverflow-card {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: var(--cf-card);
+  height: var(--cf-card);
+  border-radius: 22px;
   overflow: hidden;
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.75), 0 0 1px rgba(255, 255, 255, 0.15);
   cursor: pointer;
-  transform: scale(0.94) translateY(0);
-  opacity: 0.82;
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.35s ease,
-              opacity 0.35s ease;
-  will-change: transform, box-shadow;
+  will-change: transform, opacity, z-index;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-/* Pop-Up Effect: Center Active Card & Hovered Card Enlarge */
-.portfolio-card.is-active,
-.portfolio-card:hover {
-  transform: scale(1.06) translateY(-10px);
-  opacity: 1;
-  z-index: 10;
+.coverflow-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.coverflow-card.is-active {
   border-color: var(--clyx-yellow);
-  box-shadow: 0 24px 50px -10px rgba(0, 0, 0, 0.75), 0 0 30px var(--clyx-yellow-glow);
+  box-shadow: 0 30px 65px -10px rgba(0, 0, 0, 0.85), 0 0 35px var(--clyx-yellow-glow);
+  cursor: pointer;
 }
 
-html[data-theme="light"] .portfolio-card.is-active,
-html[data-theme="light"] .portfolio-card:hover {
+.coverflow-card.is-active img {
+  transform: scale(1.04);
+}
+
+html[data-theme="light"] .coverflow-card {
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+}
+
+html[data-theme="light"] .coverflow-card.is-active {
   border-color: var(--clyx-blue);
-  box-shadow: 0 24px 50px -10px rgba(0, 58, 163, 0.22), 0 0 25px rgba(0, 58, 163, 0.15);
+  box-shadow: 0 24px 55px -10px rgba(0, 58, 163, 0.28), 0 0 25px rgba(0, 58, 163, 0.18);
 }
 
-.portfolio-media { position: relative; height: 210px; overflow: hidden; }
-.portfolio-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-.portfolio-card.is-active .portfolio-media img,
-.portfolio-card:hover .portfolio-media img { transform: scale(1.08); }
-.portfolio-badge-roas { position: absolute; top: 12px; right: 12px; background: var(--clyx-yellow); color: #050814; font-family: var(--font-display); font-weight: 800; font-size: 0.75rem; padding: 4px 10px; border-radius: var(--radius-full); box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.3s ease; }
-.portfolio-card.is-active .portfolio-badge-roas,
-.portfolio-card:hover .portfolio-badge-roas { transform: scale(1.05); }
-.portfolio-info { padding: 20px; }
-.portfolio-info .cat { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--clyx-yellow); font-weight: 700; margin-bottom: 6px; }
-html[data-theme="light"] .portfolio-info .cat { color: var(--clyx-blue); }
-.portfolio-info h3 { font-size: 1.25rem; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.portfolio-info p.summary-text { font-size: 0.85rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text-secondary); }
-.portfolio-metrics-row { display: flex; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-subtle); justify-content: space-between; }
-.metric-item { display: flex; flex-direction: column; }
-.metric-val { font-family: var(--font-display); font-weight: 800; font-size: 1.05rem; color: var(--text-primary); }
-.metric-lbl { font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); }
+/* Card Overlays (Pills) */
+.coverflow-card-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--clyx-yellow);
+  color: #050814;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.74rem;
+  padding: 5px 11px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.coverflow-card-cat {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(5, 8, 20, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #FFF;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 5px 11px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Side Chevrons Overlay */
+.coverflow-nav-btn {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 120;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(13, 17, 30, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.coverflow-nav-btn.prev { left: 16px; }
+.coverflow-nav-btn.next { right: 16px; }
+
+.coverflow-nav-btn:hover {
+  background: var(--clyx-yellow);
+  color: #050814;
+  border-color: var(--clyx-yellow);
+  transform: translateY(-50%) scale(1.1);
+}
+
+html[data-theme="light"] .coverflow-nav-btn {
+  background: rgba(255, 255, 255, 0.9);
+  color: #050814;
+  border-color: rgba(0, 0, 0, 0.12);
+}
+html[data-theme="light"] .coverflow-nav-btn:hover {
+  background: var(--clyx-blue);
+  color: #FFF;
+  border-color: var(--clyx-blue);
+}
+
+/* Active Slide Caption Panel */
+.coverflow-caption-panel {
+  max-width: 680px;
+  margin: 14px auto 0;
+  text-align: center;
+  padding: 0 20px;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.coverflow-caption-title {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.coverflow-caption-sub {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.coverflow-caption-summary {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 580px;
+  margin: 0 auto 18px;
+}
+
+.coverflow-caption-metrics {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 0 auto 20px;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  max-width: 520px;
+}
+
+.coverflow-metric-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.coverflow-metric-val {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--clyx-yellow);
+}
+
+html[data-theme="light"] .coverflow-metric-val {
+  color: var(--clyx-blue);
+}
+
+.coverflow-metric-lbl {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.coverflow-caption-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--clyx-yellow);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: 1px solid var(--clyx-yellow);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.coverflow-caption-cta:hover {
+  background: var(--clyx-yellow);
+  color: #050814;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px var(--clyx-yellow-glow);
+}
+
+html[data-theme="light"] .coverflow-caption-cta {
+  color: var(--clyx-blue);
+  border-color: var(--clyx-blue);
+}
+
+html[data-theme="light"] .coverflow-caption-cta:hover {
+  background: var(--clyx-blue);
+  color: #FFF;
+}
+
+/* Pagination Indicator Dots */
+.coverflow-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.coverflow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  opacity: 0.35;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.coverflow-dot.active {
+  width: 26px;
+  border-radius: 12px;
+  background: var(--clyx-yellow);
+  opacity: 1;
+}
+
+html[data-theme="light"] .coverflow-dot.active {
+  background: var(--clyx-blue);
+}
 
 /* ==========================================================================
    FOUNDERS / LEADERSHIP SECTION

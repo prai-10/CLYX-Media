@@ -51,6 +51,42 @@ const CLYX_DATA = {
       summary: "Scaled premium noise-canceling headphones to #1 trending tech product on Instagram Reels via audiophile blind tests.",
       problem: "Competing against legacy audio giants with 100x bigger marketing budgets.",
       strategy: "Leveraged audio engineer creators doing blind sound tests vs Sony and Bose. Ads were published under creator handles."
+    },
+    {
+      id: "kura-matcha",
+      title: "KURA BOTANICAL MATCHA",
+      category: "food",
+      categoryName: "Food & Beverage",
+      deliverables: "Creator Whitelisting + Amazon Attribution",
+      heroImg: "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?q=80&w=1000&auto=format&fit=crop",
+      results: { roas: "4.8X", revenue: "+340%", cpa: "-41%", reach: "5.4M" },
+      summary: "Scaled ceremonial grade matcha brand via Japanese culinary & morning routine influencer whitelisted reels.",
+      problem: "High acquisition cost on Meta ads due to low trust in premium organic powders.",
+      strategy: "Whitelisted candid morning matcha prep routines from wellness chefs, driving directly to high-converting bundle funnels."
+    },
+    {
+      id: "solstice-fit",
+      title: "SOLSTICE ACTIVEWEAR",
+      category: "fashion",
+      categoryName: "Fashion & Athletics",
+      deliverables: "TikTok Spark Ads + Meta Whitelisting",
+      heroImg: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1000&auto=format&fit=crop",
+      results: { roas: "3.8X", revenue: "+280%", cpa: "-35%", reach: "7.1M" },
+      summary: "Executed high-intensity gym wear transition ads with 25 Hyrox & fitness creators generating ₹85L drop in 7 days.",
+      problem: "High competition in activewear with low repeat purchasing and high return rates.",
+      strategy: "Featured squat-proof and sweat-wicking stress tests on camera by verified athletic creators, scaling winning hooks."
+    },
+    {
+      id: "nova-optics",
+      title: "NOVA SMART EYEWEAR",
+      category: "tech",
+      categoryName: "Consumer Tech & Wearables",
+      deliverables: "3D Motion Ads + Creator Whitelisting",
+      heroImg: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=1000&auto=format&fit=crop",
+      results: { roas: "4.2X", revenue: "+220%", cpa: "-46%", reach: "4.8M" },
+      summary: "Turned open-ear bluetooth audio frames into a viral lifestyle everyday carry staple with day-in-the-life creator vlogs.",
+      problem: "Consumer skepticism around battery life and sound bleed on open-ear audio glasses.",
+      strategy: "Paired city commuters and digital nomad creators recording real-world calls and cafe work sessions."
     }
   ],
 

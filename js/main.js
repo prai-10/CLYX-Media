@@ -161,132 +161,363 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 8. Horizontal Scrollable Campaigns (Pop-Up Magnification on Scroll + Drag + Wheel + Arrows)
-  const grid = document.getElementById('portfolioGrid');
-  const tabs = document.querySelectorAll('.filter-tab');
+  // 8. 3D Coverflow Carousel Engine (Album Rake Physics + Middle Centering Rule)
+  const coverflowWrap = document.getElementById('coverflowWrap');
+  const viewport = document.getElementById('coverflowViewport');
+  const stage = document.getElementById('coverflowStage');
+  const sidePrevBtn = document.getElementById('coverflowNavPrev');
+  const sideNextBtn = document.getElementById('coverflowNavNext');
+  const captionPanel = document.getElementById('coverflowCaption');
+  const dotsWrap = document.getElementById('coverflowDots');
+  const tabs = document.querySelectorAll('#portfolioFilterTabs .filter-tab');
   const prevBtn = document.getElementById('portfolioPrevBtn');
   const nextBtn = document.getElementById('portfolioNextBtn');
 
-  if (grid) {
-    let isDown = false;
-    let isDragging = false;
-    let startX = 0;
-    let startScrollLeft = 0;
+  if (coverflowWrap && viewport && stage) {
+    // 3D Coverflow Physics Parameters (21st.dev spec)
+    const rotate = 44;       // Degrees first neighbour tilts
+    const depth = 0.6;       // Recession multiple of card width
+    const perspective = 3.2; // Perspective multiplier
+    const falloff = 0.56;    // Rake distance exponent
+    const fade = 0.1;        // Opacity drop per distance step
+    const gap = 0.05;        // Space between cards fraction
+    const loop = true;       // Ring looping mode
 
-    function updateActiveCard() {
-      const cards = grid.querySelectorAll('.portfolio-card');
-      if (!cards.length) return;
-      const gridRect = grid.getBoundingClientRect();
-      const centerPoint = gridRect.left + gridRect.width / 2;
+    let currentItems = [];
+    let pos = 0;             // Fractional index at center (truth)
+    let target = 0;          // Destination index
+    let selected = 0;        // Current selected whole card index
+    let cardWidth = 0;       // Measured card width in px
+    let rafId = null;
+    let dragState = null;
 
-      let closest = null;
-      let minDiff = Infinity;
+    /**
+     * Explicit Middle Card Centering Rule:
+     * - If 7 items: 4th card (index 3) is middle main
+     * - If even items like 6: 3rd card (index 2) is middle main
+     * - Formula: count % 2 === 0 ? (count / 2) - 1 : Math.floor(count / 2)
+     */
+    function getInitialCoverflowIndex(count) {
+      if (count <= 0) return 0;
+      return count % 2 === 0 ? (count / 2) - 1 : Math.floor(count / 2);
+    }
 
-      cards.forEach(card => {
-        const rect = card.getBoundingClientRect();
-        const cardCenter = rect.left + rect.width / 2;
-        const diff = Math.abs(centerPoint - cardCenter);
-        if (diff < minDiff) {
-          minDiff = diff;
-          closest = card;
+    /** Nearest whole card folded into 0..count-1 */
+    function indexAt(p, count) {
+      if (count <= 0) return 0;
+      return ((Math.round(p) % count) + count) % count;
+    }
+
+    function clampPos(p, count) {
+      if (loop || count <= 1) return p;
+      return Math.max(0, Math.min(count - 1, p));
+    }
+
+    /** Paint straight to DOM with 3D transforms & depth lighting */
+    function paint() {
+      const count = currentItems.length;
+      if (!count || !cardWidth) return;
+      const pitch = cardWidth * (1 + gap);
+      const cards = stage.querySelectorAll('.coverflow-card');
+
+      cards.forEach((card, index) => {
+        let offset = index - pos;
+        if (loop && count > 1) {
+          offset = ((offset % count) + count) % count;
+          if (offset > count / 2) offset -= count;
         }
-      });
 
-      cards.forEach(card => {
-        if (card === closest) {
-          card.classList.add('is-active');
-        } else {
-          card.classList.remove('is-active');
-        }
+        const distance = Math.abs(offset);
+        const ramp = Math.pow(distance, falloff);
+        const tilt = Math.min(rotate * ramp, 82) * Math.sign(offset);
+
+        card.style.transform = `translateX(calc(-50% + ${offset * pitch}px)) translateZ(${-depth * cardWidth * ramp}px) rotateY(${-tilt}deg)`;
+
+        const edge = (loop && count > 1) ? Math.min(1, Math.max(0, count / 2 - distance)) : 1;
+        card.style.opacity = String(Math.max(0, 1 - fade * distance) * edge);
+        card.style.zIndex = String(Math.round(100 - distance));
+
+        const isCenter = Math.round(distance) === 0;
+        card.classList.toggle('is-active', isCenter);
+        card.setAttribute('aria-hidden', (!isCenter).toString());
       });
     }
 
-    grid.addEventListener('scroll', () => {
-      requestAnimationFrame(updateActiveCard);
-    }, { passive: true });
+    function settle(nextTarget) {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      const count = currentItems.length;
+      target = nextTarget;
+      const newSelected = indexAt(nextTarget, count);
+      if (newSelected !== selected) {
+        selected = newSelected;
+        updateActiveDetails(selected);
+      }
 
-    function renderPortfolio(filter) {
-      const items = filter === 'all' ? CLYX_DATA.portfolio : CLYX_DATA.portfolio.filter(p => p.category === filter);
-      grid.innerHTML = items.map(p => `
-        <article class="portfolio-card" data-id="${p.id}" onclick="handleCardClick('${p.id}')">
-          <div class="portfolio-media">
-            <img src="${p.heroImg}" alt="${p.title}" loading="lazy">
-            <div class="portfolio-badge-roas">${p.results.roas} ROAS</div>
-          </div>
-          <div class="portfolio-info">
-            <p class="cat">${p.categoryName} · ${p.deliverables}</p>
-            <h3>${p.title}</h3>
-            <p class="summary-text">${p.summary}</p>
-            <div class="portfolio-metrics-row">
-              <div class="metric-item"><span class="metric-val">${p.results.roas}</span><span class="metric-lbl">ROAS</span></div>
-              <div class="metric-item"><span class="metric-val">${p.results.revenue}</span><span class="metric-lbl">Revenue</span></div>
-              <div class="metric-item"><span class="metric-val">${p.results.cpa}</span><span class="metric-lbl">CPA</span></div>
+      function step() {
+        const remaining = target - pos;
+        if (Math.abs(remaining) < 0.0004) {
+          pos = target;
+          paint();
+          rafId = null;
+          return;
+        }
+        pos += remaining * 0.16;
+        paint();
+        rafId = requestAnimationFrame(step);
+      }
+      rafId = requestAnimationFrame(step);
+    }
+
+    function goTo(index) {
+      const count = currentItems.length;
+      if (!count) return;
+      const nextTarget = (loop && count > 1)
+        ? index + Math.round((target - index) / count) * count
+        : index;
+      settle(clampPos(nextTarget, count));
+    }
+
+    function nudge(by) {
+      const count = currentItems.length;
+      if (!count) return;
+      settle(clampPos(Math.round(target) + by, count));
+    }
+
+    function updateActiveDetails(idx) {
+      const item = currentItems[idx];
+      if (!item) return;
+
+      // Update Caption Panel
+      if (captionPanel) {
+        captionPanel.innerHTML = `
+          <div class="coverflow-caption-title">${item.title}</div>
+          <div class="coverflow-caption-sub">${item.categoryName} · ${item.deliverables}</div>
+          <div class="coverflow-caption-summary">${item.summary}</div>
+          <div class="coverflow-caption-metrics">
+            <div class="coverflow-metric-item">
+              <span class="coverflow-metric-val">${item.results.roas}</span>
+              <span class="coverflow-metric-lbl">Blended ROAS</span>
+            </div>
+            <div class="coverflow-metric-item">
+              <span class="coverflow-metric-val">${item.results.revenue}</span>
+              <span class="coverflow-metric-lbl">Revenue Growth</span>
+            </div>
+            <div class="coverflow-metric-item">
+              <span class="coverflow-metric-val">${item.results.cpa}</span>
+              <span class="coverflow-metric-lbl">CPA Reduction</span>
+            </div>
+            <div class="coverflow-metric-item">
+              <span class="coverflow-metric-val">${item.results.reach}</span>
+              <span class="coverflow-metric-lbl">Verified Reach</span>
             </div>
           </div>
-        </article>
+          <div>
+            <button type="button" class="coverflow-caption-cta" onclick="window.openModal('${item.id}')">
+              View Full Case Study & Breakdown ↗
+            </button>
+          </div>
+        `;
+      }
+
+      // Update Dots
+      if (dotsWrap) {
+        const dots = dotsWrap.querySelectorAll('.coverflow-dot');
+        dots.forEach((dot, dIdx) => {
+          dot.classList.toggle('active', dIdx === idx);
+          dot.setAttribute('aria-current', (dIdx === idx).toString());
+        });
+      }
+    }
+
+    function measureAndPaint() {
+      const firstCard = stage.querySelector('.coverflow-card');
+      if (firstCard) {
+        cardWidth = firstCard.offsetWidth || 280;
+      } else {
+        cardWidth = 280;
+      }
+      viewport.style.perspective = `calc(${cardWidth}px * ${perspective})`;
+      paint();
+    }
+
+    function renderCoverflow(filter = 'all') {
+      currentItems = filter === 'all'
+        ? [...CLYX_DATA.portfolio]
+        : CLYX_DATA.portfolio.filter(p => p.category === filter);
+
+      if (!currentItems.length) {
+        stage.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:40px;">No campaigns found in this category.</div>';
+        if (captionPanel) captionPanel.innerHTML = '';
+        if (dotsWrap) dotsWrap.innerHTML = '';
+        return;
+      }
+
+      // Render Cards
+      stage.innerHTML = currentItems.map((p, idx) => `
+        <div class="coverflow-card" data-index="${idx}" data-id="${p.id}" role="group" aria-label="${p.title} (${idx + 1} of ${currentItems.length})">
+          <span class="coverflow-card-cat">${p.categoryName.split(' ')[0]}</span>
+          <span class="coverflow-card-badge">${p.results.roas} ROAS</span>
+          <img src="${p.heroImg}" alt="${p.title}" draggable="false" loading="lazy">
+        </div>
       `).join('');
-      grid.scrollTo({ left: 0, behavior: 'smooth' });
-      setTimeout(updateActiveCard, 100);
-    }
-    renderPortfolio('all');
 
-    tabs.forEach(t => t.addEventListener('click', () => {
-      tabs.forEach(tab => tab.classList.remove('active'));
-      t.classList.add('active');
-      renderPortfolio(t.getAttribute('data-filter'));
-    }));
+      // Render Pagination Dots
+      if (dotsWrap) {
+        dotsWrap.innerHTML = currentItems.map((_, idx) => `
+          <button type="button" class="coverflow-dot" data-index="${idx}" aria-label="Go to campaign ${idx + 1}"></button>
+        `).join('');
 
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        grid.scrollBy({ left: -360, behavior: 'smooth' });
-      });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        grid.scrollBy({ left: 360, behavior: 'smooth' });
-      });
-    }
-
-    // Mouse Drag-to-Scroll
-    grid.addEventListener('mousedown', (e) => {
-      isDown = true;
-      isDragging = false;
-      startX = e.pageX;
-      startScrollLeft = grid.scrollLeft;
-      grid.classList.add('grabbing');
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      const diff = e.pageX - startX;
-      if (Math.abs(diff) > 5) {
-        isDragging = true;
+        dotsWrap.querySelectorAll('.coverflow-dot').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const targetIndex = parseInt(btn.getAttribute('data-index'), 10);
+            goTo(targetIndex);
+          });
+        });
       }
-      grid.scrollLeft = startScrollLeft - diff;
+
+      // Explicit middle card selection per rule (e.g. 4th card for 7 items, 3rd card for 6 items)
+      const initialIndex = getInitialCoverflowIndex(currentItems.length);
+      pos = initialIndex;
+      target = initialIndex;
+      selected = initialIndex;
+
+      // Card Click Handler
+      stage.querySelectorAll('.coverflow-card').forEach(card => {
+        card.addEventListener('click', () => {
+          if (dragState && dragState.hasMoved) return;
+          const cardIdx = parseInt(card.getAttribute('data-index'), 10);
+          const currentCenter = indexAt(pos, currentItems.length);
+          if (cardIdx === currentCenter) {
+            // Already centered: open modal!
+            const id = card.getAttribute('data-id');
+            window.openModal(id);
+          } else {
+            // Off-center: rotate to center!
+            goTo(cardIdx);
+          }
+        });
+      });
+
+      measureAndPaint();
+      updateActiveDetails(initialIndex);
+    }
+
+    // Pointer Drag with Throw Physics
+    viewport.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      try { viewport.setPointerCapture(e.pointerId); } catch (err) {}
+      viewport.classList.add('is-dragging');
+      target = pos;
+      dragState = {
+        id: e.pointerId,
+        startX: e.clientX,
+        lastX: e.clientX,
+        pos: pos,
+        v: 0,
+        t: performance.now(),
+        hasMoved: false,
+      };
     });
 
-    window.addEventListener('mouseup', () => {
-      if (isDown) {
-        isDown = false;
-        grid.classList.remove('grabbing');
+    viewport.addEventListener('pointermove', (e) => {
+      if (!dragState || dragState.id !== e.pointerId) return;
+      const count = currentItems.length;
+      const pitch = cardWidth * (1 + gap);
+      if (!pitch) return;
+
+      const now = performance.now();
+      const dt = Math.max(now - dragState.t, 1);
+      const prevPos = pos;
+
+      pos = clampPos(dragState.pos - (e.clientX - dragState.startX) / pitch, count);
+
+      if (Math.abs(e.clientX - dragState.startX) > 6) {
+        dragState.hasMoved = true;
+      }
+
+      dragState.v = ((pos - prevPos) / dt) * 1000;
+      dragState.t = now;
+      dragState.lastX = e.clientX;
+
+      const newIndex = indexAt(pos, count);
+      if (newIndex !== selected) {
+        selected = newIndex;
+        updateActiveDetails(selected);
+      }
+      paint();
+    });
+
+    function endPointerDrag(e) {
+      if (!dragState || dragState.id !== e.pointerId) return;
+      viewport.classList.remove('is-dragging');
+      try { viewport.releasePointerCapture(e.pointerId); } catch (err) {}
+
+      const count = currentItems.length;
+      const carried = Math.max(-2, Math.min(2, dragState.v * 0.18));
+      const finalTarget = clampPos(Math.round(pos + carried), count);
+
+      setTimeout(() => { dragState = null; }, 60);
+      settle(finalTarget);
+    }
+
+    viewport.addEventListener('pointerup', endPointerDrag);
+    viewport.addEventListener('pointercancel', endPointerDrag);
+
+    // Keyboard & Wheel
+    viewport.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        nudge(-1);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nudge(1);
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const activeItem = currentItems[selected];
+        if (activeItem) window.openModal(activeItem.id);
       }
     });
 
-    // Mouse Wheel to Horizontal Carousel Scroll
-    grid.addEventListener('wheel', (e) => {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        const canScrollLeft = grid.scrollLeft > 0 && e.deltaY < 0;
-        const canScrollRight = grid.scrollLeft < (grid.scrollWidth - grid.clientWidth - 4) && e.deltaY > 0;
-        if (canScrollLeft || canScrollRight) {
-          e.preventDefault();
-          grid.scrollBy({ left: e.deltaY * 1.3, behavior: 'auto' });
-        }
+    viewport.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+        nudge(e.deltaX > 0 ? 1 : -1);
       }
     }, { passive: false });
 
+    // Side Chevrons & Top Section Nav Buttons
+    if (sidePrevBtn) sidePrevBtn.addEventListener('click', () => nudge(-1));
+    if (sideNextBtn) sideNextBtn.addEventListener('click', () => nudge(1));
+    if (prevBtn) prevBtn.addEventListener('click', () => nudge(-1));
+    if (nextBtn) nextBtn.addEventListener('click', () => nudge(1));
+
+    // Filter Tabs
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.getAttribute('data-filter') || 'all';
+        renderCoverflow(filter);
+      });
+    });
+
+    // ResizeObserver for dynamic responsiveness
+    const resizeObserver = new ResizeObserver(() => {
+      measureAndPaint();
+    });
+    resizeObserver.observe(viewport);
+
+    // Initial render
+    renderCoverflow('all');
+
     window.handleCardClick = function(id) {
-      if (isDragging) return;
-      openModal(id);
+      if (dragState && dragState.hasMoved) return;
+      window.openModal(id);
     };
   }
 
