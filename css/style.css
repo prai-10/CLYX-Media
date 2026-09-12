@@ -266,8 +266,8 @@ html[data-theme="light"] .macbook-base { background: #CBD5E1; }
 }
 
 /* Counters Strip */
-.stats-counter-strip { padding: 60px 48px; max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-.stat-counter-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 32px 28px; display: flex; flex-direction: column; gap: 8px; transition: all var(--transition-fast); }
+.stats-counter-strip { padding: 40px 48px; max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.stat-counter-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 28px 24px; display: flex; flex-direction: column; gap: 8px; transition: all var(--transition-fast); }
 .stat-counter-card:hover { border-color: var(--clyx-yellow); transform: translateY(-4px); }
 .counter-number { font-family: var(--font-display); font-size: clamp(2.4rem, 4vw, 3.4rem); font-weight: 800; letter-spacing: -0.04em; color: var(--clyx-yellow); line-height: 1; }
 html[data-theme="light"] .counter-number { color: var(--clyx-blue); }
@@ -275,8 +275,8 @@ html[data-theme="light"] .counter-number { color: var(--clyx-blue); }
 .counter-detail { font-size: 0.8rem; color: var(--text-muted); }
 
 /* Sections */
-.section { padding: 100px 48px; max-width: 1400px; margin: 0 auto; }
-.section-head { margin-bottom: 48px; }
+.section { padding: 48px 48px; max-width: 1400px; margin: 0 auto; }
+.section-head { margin-bottom: 30px; }
 .section-head h2 { font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -0.03em; }
 .section-head.split { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 
@@ -290,7 +290,7 @@ html[data-theme="light"] .service-icon { background: rgba(0, 58, 163, 0.08); col
 .service-card p { font-size: 0.95rem; line-height: 1.6; }
 
 /* Whitelisting Explainer */
-.how { background: var(--bg-secondary); border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); margin-top: 40px; margin-bottom: 40px; }
+.how { background: var(--bg-secondary); border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); margin-top: 16px; margin-bottom: 16px; }
 .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
 .how-copy h2 { font-size: 2.2rem; margin-bottom: 20px; }
 .how-text { font-size: 1.05rem; line-height: 1.7; }
@@ -340,7 +340,7 @@ html[data-theme="light"] .how-num { color: var(--clyx-blue); }
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 40px 0 30px;
+  padding: 24px 0 16px;
   cursor: grab;
   outline: none;
   touch-action: pan-y;
@@ -530,8 +530,8 @@ html[data-theme="light"] .coverflow-nav-btn:hover {
   align-items: center;
   gap: 24px;
   flex-wrap: wrap;
-  margin: 0 auto 20px;
-  padding: 12px 20px;
+  margin: 0 auto 14px;
+  padding: 10px 18px;
   border-radius: var(--radius-md);
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -601,7 +601,7 @@ html[data-theme="light"] .coverflow-caption-cta:hover {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-top: 22px;
+  margin-top: 14px;
 }
 
 .coverflow-dot {
@@ -673,7 +673,7 @@ html[data-theme="light"] .founder-advisory-link { color: var(--clyx-blue); }
 /* ==========================================================================
    FASTER TESTIMONIALS MARQUEE (Sped up from 36s to 15s)
    ========================================================================== */
-.testimonial-marquee { width: 100%; overflow: hidden; padding: 20px 0; }
+.testimonial-marquee { width: 100%; overflow: hidden; padding: 10px 0; }
 .testimonial-track {
   display: flex;
   gap: 28px;
@@ -692,10 +692,10 @@ html[data-theme="light"] .testimonial-meta .brand { color: var(--clyx-blue); }
   background: linear-gradient(135deg, #003AA3 0%, #001F5C 100%) !important;
   color: #FFFFFF !important;
   border-radius: var(--radius-lg);
-  padding: 85px 48px;
+  padding: 64px 48px;
   text-align: center;
   max-width: 1400px;
-  margin: 60px auto 100px;
+  margin: 40px auto 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -764,8 +764,8 @@ html[data-theme="light"] .testimonial-meta .brand { color: var(--clyx-blue); }
 }
 
 /* Footer */
-.site-footer { border-top: 1px solid var(--border-subtle); background: var(--bg-secondary); padding: 80px 48px 40px; }
-.footer-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 48px; margin-bottom: 60px; }
+.site-footer { border-top: 1px solid var(--border-subtle); background: var(--bg-secondary); padding: 56px 48px 36px; }
+.footer-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 48px; margin-bottom: 40px; }
 .footer-brand p { margin: 16px 0 24px; max-width: 320px; }
 .footer-col h5 { font-size: 1rem; margin-bottom: 20px; color: var(--text-primary); }
 .footer-col a { display: block; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px; }
@@ -1296,7 +1296,7 @@ html[data-theme="light"] .search-empty-state {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
-  margin-top: 48px;
+  margin-top: 0;
 }
 .blog-card {
   background: var(--bg-card);
@@ -1388,7 +1388,7 @@ html[data-theme="light"] .blog-read-link {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  margin-top: 48px;
+  margin-top: 0;
 }
 .career-card {
   background: var(--bg-card);
@@ -1462,7 +1462,7 @@ html[data-theme="light"] .career-comp {
 
 /* Newsletter Strip */
 .newsletter {
-  padding: 80px 48px;
+  padding: 56px 48px;
   background: linear-gradient(180deg, transparent 0%, rgba(0, 58, 163, 0.08) 100%);
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
