@@ -16,3 +16,8 @@ tsconfig.tsbuildinfo
 .DS_Store
 Thumbs.db
 *.log
+
+# Internal Admin Portal (kept private & excluded from public git repository)
+admin.html
+css/admin.css
+js/admin.js
